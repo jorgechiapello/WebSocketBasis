@@ -1,5 +1,5 @@
 /// Hacer conexión
-var socket = io.connect('http://localhost:3000');
+var chat = io.connect('http://localhost:3000/chat');
 
 //Query DOM
 var message = document.getElementById('message')
@@ -7,29 +7,36 @@ var message = document.getElementById('message')
     btn = document.getElementById('send')
     output = document.getElementById('output')
     feedback = document.getElementById('feedback')
+    rooms = document.getElementById('rooms')
 
 ///Evento
 btn.addEventListener('click',(event)=>{
+  console.log('evento enviar')
   /// emite un evento llamado chat y un objeto
-  socket.emit('chat',{
+  chat.emit('chat',{
     message:message.value,
     handle:handle.value
   })
 })
 
 message.addEventListener('keypress',()=>{
-  socket.emit('typing',handle.value)
+  chat.emit('typing',handle.value)
 })
-///Escucha eventos
-socket.on('chat',(data)=>{
-  feedback.innerHTML = '';
+
+function escribir(data) {
   output.innerHTML += `<p><strong>${data.handle}:</strong>${data.message}</p>`
+}
+///Escucha eventos
+chat.on('chat',(data)=>{
+  console.log('recibió');
+  feedback.innerHTML = ''
+  escribir(data)
 })
 
-socket.on('typing',(data)=>{
-  feedback.innerHTML = `<p><em>${data} está escribiendo... </p>`
+chat.on('typing',(data)=>{
+  feedback.innerHTML = `<p><em>${data} is typing... </p>`
 })
 
-socket.on('setup',(data)=>{
-  console.log(data);
+rooms.addEventListener('change',()=>{
+  chat.emit('changeSetup',selectedRoom)
 })
