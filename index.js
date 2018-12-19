@@ -1,14 +1,17 @@
 var express = require('express')
-var middleware = require('./src/Middleware')
+var middleware = require('./server/Middleware')
 var app = express()
-var socket = require('./src/Socket')
-var routerAPI = require('./src/RouterAPI')
+var socket = require('./server/Socket')
+var routerAPI = require('./server/RouterAPI')
+var cors = require('cors')
 
 ///App Setup
-var server = app.listen(3000, (err, req, res, next)=>{
+var server = app.listen(3001, (err, req, res, next)=>{
   if (err) throw err
-  console.log('Está escuchando en el puerto 3000');
+  console.log('Está escuchando en el puerto 3001');
 })
+
+app.use(cors(),express.static('public'))
 
 ///App Middleware
 app.use(middleware.requestTime,middleware.myLogger)
