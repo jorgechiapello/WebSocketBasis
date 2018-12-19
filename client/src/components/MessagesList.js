@@ -14,12 +14,12 @@ class MessagesList extends Component {
     return (
       <ChatContext.Consumer>
       {(context) => (
-        <React.Fragment>
+        <div>
           {messages.map( elem => (
             <Message key={elem.id} message={elem}>
             </Message>
           ))}
-        </React.Fragment>
+        </div>
       )}
       </ChatContext.Consumer>
     )

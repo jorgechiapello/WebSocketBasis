@@ -15,14 +15,14 @@ class Recepcionist extends Component {
   }
   render() {
     return (
+      <ChatsProvider value={this.state}>
       <div className="Recepcionist">
-        <ChatsProvider value={this.state}>
           <Sidebar/>
           <section id="main">
             <MessagesList />
           </section>
-        </ChatsProvider>
       </div>
+      </ChatsProvider>
     );
   }
 

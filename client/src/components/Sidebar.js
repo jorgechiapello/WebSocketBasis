@@ -19,11 +19,13 @@ class Sidebar extends Component {
     return (
       <ChatContext.Consumer>
       {(context) => (
-        <React.Fragment>
-        {chatTopics.map(elem=>(
-          <li key={elem} onClick={this.handleClick(elem,context)} value={elem}>{elem}</li>
-        ))}
-        </React.Fragment>
+        <div>
+          <ul>
+          {chatTopics.map(elem=>(
+            <li key={elem} onClick={this.handleClick(elem,context)} value={elem}>{elem}</li>
+          ))}
+          </ul>
+        </div>
       )}
       </ChatContext.Consumer>
     )
