@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import Sidebar from "./Sidebar";
 import MessagesList from "./MessagesList";
-import ChatsProvider from '../providers/ChatsProvider'
+import { Provider } from 'react-redux'
+import store from '../stores/chatStore'
+import { addMessage } from '../actions'
 
 
 class Recepcionist extends Component {
@@ -14,15 +16,24 @@ class Recepcionist extends Component {
     }
   }
   render() {
+    // console.log(store.getState())
+    setTimeout(function () {
+      console.log('time out');
+      store.dispatch(addMessage('Learn about actions','Jorge','chat1'))
+      store.dispatch(addMessage('Aiuuuuda','Jorge','chat2'))
+    }, 3000);
+
+    // console.log(store.getState())
+
     return (
-      <ChatsProvider value={this.state}>
-      <div className="Recepcionist">
-          <Sidebar/>
-          <section id="main">
-            <MessagesList />
-          </section>
-      </div>
-      </ChatsProvider>
+      <Provider store={store}>
+        <div className="Recepcionist">
+            <Sidebar/>
+            <section id="main">
+              <MessagesList />
+            </section>
+        </div>
+      </Provider>
     );
   }
 

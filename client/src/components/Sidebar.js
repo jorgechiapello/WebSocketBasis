@@ -1,37 +1,27 @@
 import React, { Component } from 'react';
-import { ChatContext } from '../contexts/ChatContext';
+import { connect } from 'react-redux'
+import { changeChatSelected } from '../actions'
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props)
-    this.handleClick.bind(this)
-  }
-  handleClick = (elem,context) => (e) => {
-    e.preventDefault()
-    // context.state.chatSelected = elem
-    context.changeSelected(elem)
-  }
   render() {
-    var chatTopics = []
-    if (this.context.state.chats) {
-      chatTopics = Object.keys(this.context.state.chats)
-    }
     return (
-      <ChatContext.Consumer>
-      {(context) => (
-        <div>
-          <ul>
-          {chatTopics.map(elem=>(
-            <li key={elem} onClick={this.handleClick(elem,context)} value={elem}>{elem}</li>
-          ))}
-          </ul>
-        </div>
+      <div>
+      {this.props.chatTopics.map((elem)=>
+        ( <li key={elem} onClick={this.props.handleClick(elem)}>{elem}</li>)
       )}
-      </ChatContext.Consumer>
+      </div>
     )
   }
 }
 
-Sidebar.contextType = ChatContext;
+const mapStateToProps = state => {
+  return {chatTopics: Object.keys(state.messages.chatList)}
+}
 
-export default Sidebar;
+const mapDispatchToProps = dispatch => ({
+  handleClick: (elem) => (e) => {
+    dispatch(changeChatSelected(elem))
+  }
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Sidebar)
