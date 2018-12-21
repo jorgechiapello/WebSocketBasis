@@ -20,11 +20,6 @@ export const chatsReceived = (chats) => ({
   chats,
 })
 
-export const chatReceived = (chat) => ({
-  type: types.CHAT_RECEIVED,
-  chat,
-})
-
 export const fetchChatIfNeeded = (chatId) => (
   (dispatch, getState) => {
     let isInCache = getState().panel.chatsCache.find((elem) => (elem.id === chatId))
@@ -47,11 +42,33 @@ export const fetchChat = (chatId) => (
   )
 )
 
+export const chatReceived = (chat) => (
+  (dispatch)=>{
+    dispatch(pushChatReceived(chat))
+  }
+)
+
+export const newChatReceived = (chat) => (
+  (dispatch)=>{
+    dispatch(pushChatReceived(chat))
+    dispatch(pushChatListElement(chat))
+  }
+)
+
+export const pushChatReceived = (chat) => ({
+  type: types.PUSH_CHAT_RECEIVED,
+  chat,
+})
+
+export const pushChatListElement = (chat) => ({
+  type: types.PUSH_CHAT_LIST_ELEMENT,
+  chat,
+})
+
 export const changeChatSelected = (chatSelected) => ({
   type: types.CHANGE_CHAT_SELECTED,
   chatSelected,
 })
-
 
 export const pushMessage = (chatSelected, message, handle) => ({
   type: types.PUSH_MESSAGE,

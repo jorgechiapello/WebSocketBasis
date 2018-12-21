@@ -5,7 +5,7 @@ import MessagesList from "./MessagesList";
 import NewMessage from "./NewMessage";
 import { Provider } from 'react-redux'
 import storeFunction from '../stores/chatStore'
-import { fetchChats } from '../actions'
+import { fetchChats, newChatReceived, addMessage } from '../actions'
 
 const store = storeFunction()
 
@@ -19,6 +19,27 @@ class Recepcionist extends Component {
   }
   render() {
     store.dispatch(fetchChats())
+    // setTimeout(function () {
+    //   store.dispatch(newChatReceived(  {
+    //     id:4,
+    //     name:'chat4',
+    //     unRead:false,
+    //     messages:[
+    //       {
+    //         id:1,
+    //         unRead:false,
+    //         message:'Hola',
+    //         handle:'Jorge'
+    //       },{
+    //         id:2,
+    //         unRead:false,
+    //         message:'Anduvo!!!',
+    //         handle:'Fulano'
+    //       }
+    //     ],
+    //   }))
+    //   store.dispatch(addMessage(1123,'Probando un msj nuevo','Fulano de tal'))
+    // }, 1000);
     return (
       <Provider store={store}>
         <div className="Recepcionist">
