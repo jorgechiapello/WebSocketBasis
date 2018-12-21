@@ -4,9 +4,14 @@ import Message from './Message'
 
 class MessagesList extends Component {
   render() {
+    var messages = []
+    var aux =  this.props.chat.find( (elem)=>(elem.id === this.props.chatSelected) )
+    if (aux) {
+      messages = aux.messages
+    }
     return (
       <div>
-      {this.props.messages.map( (elem) => (
+      {messages.map( (elem) => (
         <Message key={elem.id} message={elem} />
       ))}
       </div>
@@ -15,10 +20,9 @@ class MessagesList extends Component {
 }
 
 const mapStateToProps = state => {
-  let index = state.messages.chatSelected
   return {
-    messages: state.messages.chatList[index]['messages'],
-    index: state.messages.chatSelected
+    chat: state.panel.chatsCache,
+    chatSelected: state.panel.chatSelected
   }
 }
 

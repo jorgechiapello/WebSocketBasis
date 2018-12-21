@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import Sidebar from "./Sidebar";
 import MessagesList from "./MessagesList";
+import NewMessage from "./NewMessage";
 import { Provider } from 'react-redux'
-import store from '../stores/chatStore'
-import { addMessage } from '../actions'
+import storeFunction from '../stores/chatStore'
+import { fetchChats } from '../actions'
 
+const store = storeFunction()
 
 class Recepcionist extends Component {
   constructor(props) {
@@ -16,27 +18,19 @@ class Recepcionist extends Component {
     }
   }
   render() {
-    // console.log(store.getState())
-    setTimeout(function () {
-      console.log('time out');
-      store.dispatch(addMessage('Learn about actions','Jorge','chat1'))
-      store.dispatch(addMessage('Aiuuuuda','Jorge','chat2'))
-    }, 3000);
-
-    // console.log(store.getState())
-
+    store.dispatch(fetchChats())
     return (
       <Provider store={store}>
         <div className="Recepcionist">
             <Sidebar/>
             <section id="main">
               <MessagesList />
+              <NewMessage />
             </section>
         </div>
       </Provider>
     );
   }
-
 }
 
 export default Recepcionist;

@@ -4,11 +4,15 @@ exports.init = function (express) {
   var routerAPI = express.Router()
 
   routerAPI.get('/chats', function(req, res) {
-    res.json(history)
+    res.json(history.map(elem => ({
+      id: elem.id,
+      name: elem.name,
+      messages: []
+    }) ))
   })
 
   routerAPI.get('/chats/:chatId',function (req,res) {
-    res.json({message: history[req.params.chatId]})
+    res.json( history.find( elem =>(elem.id == req.params.chatId) ) )
   })
   return routerAPI;
 }
