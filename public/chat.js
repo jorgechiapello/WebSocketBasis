@@ -1,34 +1,33 @@
-/// Hacer conexión
-var chat = io.connect('http://localhost:3000/chat');
-
 //Query DOM
 var message = document.getElementById('message')
-    handle = document.getElementById('handle')
     btn = document.getElementById('send')
     output = document.getElementById('output')
     feedback = document.getElementById('feedback')
-    rooms = document.getElementById('rooms')
+    name = document.getElementById('name').value
+    chatId = null
+    /// Hacer conexión
+    var chat = io('http://localhost:3001/chat', { query: {rol: 'PublicUser', chatId:chatId} });
 
-///Evento
+///Eventos emitidos
 btn.addEventListener('click',(event)=>{
-  console.log('evento enviar')
+  name != document.getElementById('name')
   /// emite un evento llamado chat y un objeto
-  chat.emit('chat',{
+  chat.emit('consult',{
     message:message.value,
-    handle:handle.value
+    name:name.value,
+    chatId:chatId
   })
 })
 
 message.addEventListener('keypress',()=>{
-  chat.emit('typing',handle.value)
+  chat.emit('typing',name.value)
 })
 
 function escribir(data) {
-  output.innerHTML += `<p><strong>${data.handle}:</strong>${data.message}</p>`
+  output.innerHTML += `<p><strong>${data.name}:</strong>${data.message}</p>`
 }
 ///Escucha eventos
-chat.on('chat',(data)=>{
-  console.log('recibió');
+chat.on('message',(data)=>{
   feedback.innerHTML = ''
   escribir(data)
 })
@@ -37,6 +36,9 @@ chat.on('typing',(data)=>{
   feedback.innerHTML = `<p><em>${data} is typing... </p>`
 })
 
-rooms.addEventListener('change',()=>{
-  chat.emit('changeSetup',selectedRoom)
+chat.on('setup',(data)=>{
+  console.log('recibió setup',data);
+  chatId = data.id
+  name = data.name
+  document.getElementById("name").value = data.name
 })

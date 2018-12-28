@@ -1,45 +1,44 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
+import { Provider } from 'react-redux'
+
 import Sidebar from "./Sidebar";
 import MessagesList from "./MessagesList";
 import NewMessage from "./NewMessage";
-import { Provider } from 'react-redux'
 import storeFunction from '../stores/chatStore'
-import { fetchChats, newChatReceived, addMessage } from '../actions'
+import { fetchChatList, messageReceived } from '../actions'
 
-const store = storeFunction()
+// import { fetchChats, newChatReceived, addMessage, messageReceived } from '../actions'
+
+const store = storeFunction
+
 
 class Recepcionist extends Component {
-  constructor(props) {
-    super(props)
-    const socketChat = io('http://localhost:3001/chat')
-    this.state = {
-      socket: socketChat,
-    }
-  }
   render() {
-    store.dispatch(fetchChats())
+    store.dispatch(fetchChatList())
     // setTimeout(function () {
-    //   store.dispatch(newChatReceived(  {
-    //     id:4,
-    //     name:'chat4',
-    //     unRead:false,
-    //     messages:[
-    //       {
-    //         id:1,
-    //         unRead:false,
-    //         message:'Hola',
-    //         handle:'Jorge'
-    //       },{
-    //         id:2,
-    //         unRead:false,
-    //         message:'Anduvo!!!',
-    //         handle:'Fulano'
-    //       }
-    //     ],
-    //   }))
-    //   store.dispatch(addMessage(1123,'Probando un msj nuevo','Fulano de tal'))
+    //   store.dispatch(chatReceived(
+    //     {
+    //       id:5,
+    //       name:'chat5',
+    //       unRead:false,
+    //       messages:[
+    //         {
+    //           id:1,
+    //           unRead:false,
+    //           message:'una consultita',
+    //           handle:'Fulano'
+    //         }
+    //       ],
+    //     }
+    //   ))
     // }, 1000);
+    setTimeout(function () {
+      // store.dispatch(addMessage('y otro más','Jorge'))
+      // store.dispatch(messageReceived(5,'mensaje recibido','Fulano de tal'))
+    }, 2000);
+    setTimeout(function () {
+      store.dispatch(messageReceived(213123,'mensaje recibido','Fulano de tal'))
+    }, 3000);
     return (
       <Provider store={store}>
         <div className="Recepcionist">

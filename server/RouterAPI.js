@@ -12,7 +12,24 @@ exports.init = function (express) {
   })
 
   routerAPI.get('/chats/:chatId',function (req,res) {
-    res.json( history.find( elem =>(elem.id == req.params.chatId) ) )
-  })
-  return routerAPI;
+    if (req.params.chatId == 5) {
+      res.json(   {
+        id:5,
+        name:'chat5',
+        unRead:false,
+        messages:[
+          {
+            id:1,
+            unRead:false,
+            message:'una consultita',
+            handle:'Fulano'
+          }
+        ],
+      },
+    )
+  }
+  
+  res.json( history.find( elem =>(elem.id == req.params.chatId) ) )
+})
+return routerAPI;
 }

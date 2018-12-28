@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   handleClick: (chatSelected) => (e) => {
     dispatch( fetchChatIfNeeded(chatSelected.id) )
-    dispatch(changeChatSelected(chatSelected))
+    dispatch( changeChatSelected(chatSelected) )
   }
 })
 

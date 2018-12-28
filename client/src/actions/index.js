@@ -1,75 +1,45 @@
 import * as types from './actionTypes'
 
-export const fetchChats = () => (
-  (dispatch) => (
-    fetch('http://localhost:3001/api/chats')
-    .then(
-      response => response.json(),
-      error => console.log('Error: ', error)
-    )
-    .then(json =>{
-      dispatch(chatsReceived(json))
-      dispatch(changeChatSelected(json[0]))
-      dispatch(fetchChatIfNeeded(json[0]['id']))
-    })
-  )
-)
+export const fetchChatList = () => ({
+  type: types.FETCH_CHAT_LIST,
+})
 
-export const chatsReceived = (chats) => ({
-  type: types.CHATS_RECEIVED,
+export const chatListReceived = (chats) => ({
+  type: types.CHAT_LIST_RECEIVED,
   chats,
 })
 
-export const fetchChatIfNeeded = (chatId) => (
-  (dispatch, getState) => {
-    let isInCache = getState().panel.chatsCache.find((elem) => (elem.id === chatId))
-    if (!isInCache) {
-      return dispatch(fetchChat(chatId))
-    }
-  }
-)
+export const fetchChatIfNeeded = (chatId) => ({
+  type: types.FETCH_CHAT_IF_NEED,
+  chatId,
+})
 
-export const fetchChat = (chatId) => (
-  (dispatch) => (
-    fetch('http://localhost:3001/api/chats/'+chatId)
-    .then(
-      response => response.json(),
-      error => console.log('Error: ', error)
-    )
-    .then(json =>{
-      dispatch(chatReceived(json))
-    })
-  )
-)
-
-export const chatReceived = (chat) => (
-  (dispatch)=>{
-    dispatch(pushChatReceived(chat))
-  }
-)
-
-export const newChatReceived = (chat) => (
-  (dispatch)=>{
-    dispatch(pushChatReceived(chat))
-    dispatch(pushChatListElement(chat))
-  }
-)
+export const chatReceived = (chat) => ({
+  type: types.CHAT_RECEIVED,
+  chat,
+})
 
 export const pushChatReceived = (chat) => ({
   type: types.PUSH_CHAT_RECEIVED,
   chat,
 })
-
+/// agrega un chat al listado de chats
 export const pushChatListElement = (chat) => ({
   type: types.PUSH_CHAT_LIST_ELEMENT,
   chat,
 })
-
+///cambia el chat selecciona para mostrar en pantalla
 export const changeChatSelected = (chatSelected) => ({
   type: types.CHANGE_CHAT_SELECTED,
   chatSelected,
 })
 
+export const putChatOnTopList = (chatId) => ({
+  type: types.PUT_CHAT_ON_TOP_LIST,
+  chatId
+})
+
+///accion para agregar un mensaje a un chat
 export const pushMessage = (chatSelected, message, handle) => ({
   type: types.PUSH_MESSAGE,
   chatSelected,
@@ -77,14 +47,18 @@ export const pushMessage = (chatSelected, message, handle) => ({
   handle
 })
 
-export const addMessage = (chatSelected, message, handle) => (
-  (dispatch)=>(
-    dispatch(pushMessage(chatSelected, message, handle))
-  )
-)
+//// Accion cuando se agrega un mensajes desde el cliente
+export const addMessage = (message, handle) => ({
+  type: types.ADD_MESSAGE,
+  message,
+  handle
+})
 
-export const messageReceived = () => (
-  (dispatch) => (
-    222
-  )
-)
+// Accion cuando se recibe un mensaje del servidor
+// si no está el chat en cache, lo busca sino agrega nomás
+export const messageReceived = (chatSelected,message,handle) => ({
+  type: types.MESSAGE_RECEIVED,
+  chatSelected,
+  message,
+  handle
+})
