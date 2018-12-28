@@ -46,10 +46,10 @@ function* addMessage(socket) {
   yield takeEvery(types.ADD_MESSAGE, function* (action) {
     var chatSelected = yield select (getChatSelected)
     yield put( actions.pushMessage(chatSelected,action.message,action.handle))
-    socket.emit('message',{
+    socket.emit('reply',{
       to: chatSelected,
       message: action.message,
-      handle: action.handle
+      name: action.handle
     })
   })
 }

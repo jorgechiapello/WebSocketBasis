@@ -40,9 +40,22 @@ exports.init =  function (server) {
 
     socket.on('consult', (data)=>{
       if (data.chatId == null) {
-        chatId = 5
+        chatId = history.length + 1
         chat.to(socket.id).emit('setup', {id: chatId, name: data.name});
         connectedPublicUsers[chatId] = socket
+        history.push({
+          id:chatId,
+          name:data.name,
+          unRead:false,
+          messages:[
+            {
+              id:1,
+              unRead:false,
+              message:data.message,
+              handle:data.name
+            }
+          ],
+        })
         console.log(Object.keys(connectedPublicUsers));
       }
       data.timestamp = Date.now()
@@ -52,10 +65,9 @@ exports.init =  function (server) {
       chat.to(socket.id).emit('message', data);
     })
 
-    socket.on('message', (data)=>{
-      console.log(connectedPublicUsers[data.to]['id']);
+    socket.on('reply', (data)=>{
+      data.name = 'Ministerio de Justicia'
       socket.to(connectedPublicUsers[data.to]['id']).emit('message', data )
-      console.log(data);
     })
 
     socket.on('typing',(data)=>{
