@@ -6,15 +6,20 @@ var message = document.getElementById('message')
     name = document.getElementById('name').value
     chatId = null
     /// Hacer conexión
-    var chat = io('http://localhost:3001/chat', { query: {rol: 'PublicUser', chatId:chatId} });
+    var chat = io('http://localhost:3001/chat', { query: {rol: 'PublicUser', chatId:chatId, name:name} });
 
 ///Eventos emitidos
 btn.addEventListener('click',(event)=>{
-  name != document.getElementById('name')
+  console.log({
+    message:message.value,
+    name:name.value,
+    chatId:chatId
+  });
+  console.log(name);
   /// emite un evento llamado chat y un objeto
   chat.emit('consult',{
     message:message.value,
-    name:name.value,
+    name:document.getElementById('name').value,
     chatId:chatId
   })
 })
@@ -39,6 +44,5 @@ chat.on('typing',(data)=>{
 chat.on('setup',(data)=>{
   console.log('recibió setup',data);
   chatId = data.id
-  name = data.name
-  document.getElementById("name").value = data.name
+  document.getElementById('name').value = data.name
 })
