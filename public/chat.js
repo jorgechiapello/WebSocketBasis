@@ -4,7 +4,10 @@ var message = document.getElementById('message')
     output = document.getElementById('output')
     feedback = document.getElementById('feedback')
     name = document.getElementById('name').value
-    chatId = null
+    chatId = "5c41ea0cd4a1583ba839fe53"
+
+    console.log( 'chatId: ' + chatId);
+    console.log( 'name: ' + name);
     /// Hacer conexión
     var chat = io('http://localhost:3001/chat', { query: {rol: 'PublicUser', chatId:chatId, name:name} });
 
@@ -14,8 +17,8 @@ btn.addEventListener('click',(event)=>{
     message:message.value,
     name:name.value,
     chatId:chatId
-  });
-  console.log(name);
+  })
+  console.log(name)
   /// emite un evento llamado chat y un objeto
   chat.emit('consult',{
     message:message.value,
@@ -33,16 +36,20 @@ function escribir(data) {
 }
 ///Escucha eventos
 chat.on('message',(data)=>{
+  console.log('Mensaje recibido: ',data);
   feedback.innerHTML = ''
   escribir(data)
 })
 
-chat.on('typing',(data)=>{
-  feedback.innerHTML = `<p><em>${data} is typing... </p>`
-})
+// chat.on('typing',(data)=>{
+//   feedback.innerHTML = `<p><em>${data} is typing... </p>`
+// })
 
 chat.on('setup',(data)=>{
   console.log('recibió setup',data);
   chatId = data.id
   document.getElementById('name').value = data.name
+  data.messages.map(function (message) {
+    escribir(message)
+  })
 })

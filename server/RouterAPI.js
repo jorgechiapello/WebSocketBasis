@@ -1,35 +1,25 @@
 var history = require('./ChatHistory')
+let ChatModel = require('./model/chatModel')
 
-exports.init = function (express) {
+exports.init = (express) => {
   var routerAPI = express.Router()
 
-  routerAPI.get('/chats', function(req, res) {
-    res.json(history.map(elem => ({
-      id: elem.id,
-      name: elem.name,
-      messages: []
-    }) ))
+  routerAPI.get('/chats',async (req, res)=>{
+    let query = ChatModel.find({},null,{limit: 10})
+    let queryRes = await query.exec()
+    res.json(queryRes)
   })
 
-  routerAPI.get('/chats/:chatId',function (req,res) {
-    if (req.params.chatId == 5) {
-      res.json(   {
-        id:5,
-        name:'chat5',
-        unRead:false,
-        messages:[
-          {
-            id:1,
-            unRead:false,
-            message:'una consultita',
-            handle:'Fulano'
-          }
-        ],
-      },
-    )
-  }
-  
-  res.json( history.find( elem =>(elem.id == req.params.chatId) ) )
-})
-return routerAPI;
+  routerAPI.get('/chats/:chatId',async(req,res) => {
+    let query = ChatModel.findById(req.params.chatId, (err,chat)=>{
+      if (err) {console.error(err)}
+    })
+    try {
+      var queryRes = await query.exec()
+    } catch (e) {
+      queryRes = null
+    }
+    res.json(queryRes || [])
+  })
+  return routerAPI;
 }

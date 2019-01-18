@@ -4,6 +4,7 @@ import { changeChatSelected, fetchChatIfNeeded } from '../actions'
 
 class Sidebar extends Component {
   render() {
+    console.log(this.props.chatList);
     return (
       <div>
       {this.props.chatList.map((elem)=>
@@ -15,7 +16,7 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = state => {
-  return {chatList: state.panel.chatList.map( (elem)=>( { name:elem.name, id:elem.id} ) )}
+  return {chatList: state.panel.chatList.map( (elem)=>( { name:elem.name, id:elem._id} ) )}
 }
 
 const mapDispatchToProps = dispatch => ({

@@ -5,8 +5,8 @@ import * as types from '../actions/actionTypes'
 import * as actions from '../actions'
 
 ///Getters Básicos
-const isInCache = (state,chatId) => ( state.panel.chatsCache.find((elem) => (elem.id === chatId)) !== undefined )
-const isInList = (state,chatId) => ( state.panel.chatList.find((elem) => (elem.id === chatId)) !== undefined )
+const isInCache = (state,chatId) => ( state.panel.chatsCache.find((elem) => (elem._id === chatId)) !== undefined )
+const isInList = (state,chatId) => ( state.panel.chatList.find((elem) => (elem._id === chatId)) !== undefined )
 const getChatSelected = state => state.panel.chatSelected
 
 function* fetchChatList() {
@@ -15,7 +15,7 @@ function* fetchChatList() {
     chats= chats.data
     yield put( actions.chatListReceived(chats) )
     yield put( actions.changeChatSelected(chats[0]) )
-    yield put( actions.fetchChatIfNeeded(chats[0]['id']) )
+    yield put( actions.fetchChatIfNeeded(chats[0]['_id']) )
   })
 }
 
@@ -32,10 +32,10 @@ function* fetchChatIfNeeded() {
 
 function* chatReceived() {
   yield takeEvery(types.CHAT_RECEIVED, function* (action) {
-    if (!(yield select(isInCache,action.chat.id)) ) {
+    if (!(yield select(isInCache,action.chat._id)) ) {
       yield put( actions.pushChatReceived(action.chat) )
     }
-    if (!(yield select(isInList,action.chat.id)) ) {
+    if (!(yield select(isInList,action.chat._id)) ) {
       yield put( actions.pushChatListElement(action.chat) )
     }
   })
