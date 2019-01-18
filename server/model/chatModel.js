@@ -9,6 +9,7 @@ console.log('iniciado el MongoDB');
 module.exports = mongoose.model("Chat", new Schema({
   id: Schema.Types.ObjectId,
   name:String,
+  client:String,
   unRead:Boolean,
   messages:Array,
   date:Date

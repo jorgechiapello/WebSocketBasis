@@ -11,10 +11,10 @@ exports.init = (express) => {
   })
 
   routerAPI.get('/chats/:chatId',async(req,res) => {
-    let query = ChatModel.findById(req.params.chatId, (err,chat)=>{
-      if (err) {console.error(err)}
-    })
     try {
+      let query = ChatModel.findById(req.params.chatId, (err,chat)=>{
+        // if (err) {console.error(err)}
+      })
       var queryRes = await query.exec()
     } catch (e) {
       queryRes = null

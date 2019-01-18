@@ -45,11 +45,11 @@ function* addMessage(socket) {
   console.log(socket);
   yield takeEvery(types.ADD_MESSAGE, function* (action) {
     var chatSelected = yield select (getChatSelected)
-    yield put( actions.pushMessage(chatSelected,action.message,action.handle))
+    yield put( actions.pushMessage(chatSelected,action.message,action.name))
     socket.emit('reply',{
-      to: chatSelected,
+      chatId: chatSelected,
       message: action.message,
-      name: action.handle
+      name: action.name
     })
   })
 }
@@ -57,7 +57,7 @@ function* addMessage(socket) {
 function* messageReceived() {
   yield takeEvery(types.MESSAGE_RECEIVED, function* (action) {
     if ((yield select(isInCache,action.chatSelected)) ) {
-      yield put( actions.pushMessage(action.chatSelected,action.message,action.handle))
+      yield put( actions.pushMessage(action.chatSelected,action.message,action.name))
     }else {
       yield put( actions.fetchChatIfNeeded(action.chatSelected) )
     }

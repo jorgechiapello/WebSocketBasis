@@ -15,34 +15,35 @@ const panelReducer = (state = initialState,action) => {
     return Object.assign({},state,{ chatList:action.chats })
 
     case 'CHANGE_CHAT_SELECTED':
-    return Object.assign({}, state, { chatSelected:action.chatSelected.id })
+    return Object.assign({}, state, { chatSelected:(action.chatSelected?action.chatSelected._id:null) })
 
     case 'PUSH_CHAT_RECEIVED':
     return Object.assign({},state,{ chatsCache:[].concat(action.chat,state.chatsCache) })
 
     ///agrega al listado de chats un elemento nuevo
     case 'PUSH_CHAT_LIST_ELEMENT':
-    emptyChatList = state.chatList.filter( (elem)=>(elem.id !== action.chat.id) )
-    return Object.assign({},state,{ chatList: [].concat({id:action.chat.id,name:action.chat.name, messages:[]},emptyChatList) })
+    emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chat._id) )
+    return Object.assign({},state,{ chatList: [].concat({_id:action.chat._id,name:action.chat.name},emptyChatList) })
 
     ///Agrega en la cache un mensaje
     case 'PUSH_MESSAGE':
-    let oldChat =  state.chatsCache.find( (elem)=>(elem.id === action.chatSelected) )
+    let oldChat =  state.chatsCache.find( (elem)=>(elem._id === action.chatSelected) )
     let newChat = chatReducer( oldChat,action )
     ///cache de chats sin el nuevo chat
-    emptyChatCache = state.chatsCache.filter( (elem) => (elem.id !== action.chatSelected) )///chatCahe without the chat
+    emptyChatCache = state.chatsCache.filter( (elem) => (elem._id !== action.chatSelected) )///chatCahe without the chat
     //listado de chats sin el chat actualizado
-    emptyChatList = state.chatList.filter( (elem)=>(elem.id !== action.chatSelected) )
+    emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chatSelected) )
     //guarda el chat donde se agregó el último mensaje
-    chatSelectedContent = state.chatList.find( (elem)=>(elem.id === action.chatSelected) )
+    chatSelectedContent = state.chatList.find( (elem)=>(elem._id === action.chatSelected) )
+    console.log(action, newChat)
     return Object.assign({}, state,{chatsCache:emptyChatCache.concat(newChat),
-      chatList:[].concat({id:chatSelectedContent.id,name:chatSelectedContent.name, messages:[]},emptyChatList)
+      chatList:[].concat({_id:chatSelectedContent._id,name:chatSelectedContent.name, messages:[]},emptyChatList)
     } )
 
     ///agrega al listado de chats un elemento nuevo
     case 'PUT_CHAT_ON_TOP_LIST':
-    emptyChatList = state.chatList.filter( (elem)=>(elem.id !== action.chatId) )
-    chatListElement = state.chatList.find( (elem)=>(elem.id === action.chatId) )
+    emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chatId) )
+    chatListElement = state.chatList.find( (elem)=>(elem._id === action.chatId) )
     return Object.assign({},state,{ chatList: [].concat(chatListElement,emptyChatList) })
 
     default:

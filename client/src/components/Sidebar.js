@@ -4,11 +4,10 @@ import { changeChatSelected, fetchChatIfNeeded } from '../actions'
 
 class Sidebar extends Component {
   render() {
-    console.log(this.props.chatList);
     return (
       <div>
-      {this.props.chatList.map((elem)=>
-        ( <li key={elem.id} onClick={this.props.handleClick(elem)}>{elem.name}</li> )
+      {this.props.chatList.map((elem,index)=>
+        ( <li key={elem._id} onClick={this.props.handleClick(elem)}>{elem.name}</li> )
       )}
       </div>
     )
@@ -16,12 +15,12 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = state => {
-  return {chatList: state.panel.chatList.map( (elem)=>( { name:elem.name, id:elem._id} ) )}
+  return {chatList: state.panel.chatList.map( (elem)=>( { name:elem.name, _id:elem._id} ) )}
 }
 
 const mapDispatchToProps = dispatch => ({
   handleClick: (chatSelected) => (e) => {
-    dispatch( fetchChatIfNeeded(chatSelected.id) )
+    dispatch( fetchChatIfNeeded(chatSelected._id) )
     dispatch( changeChatSelected(chatSelected) )
   }
 })

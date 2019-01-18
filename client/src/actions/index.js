@@ -40,25 +40,25 @@ export const putChatOnTopList = (chatId) => ({
 })
 
 ///accion para agregar un mensaje a un chat
-export const pushMessage = (chatSelected, message, handle) => ({
+export const pushMessage = (chatSelected, message, name) => ({
   type: types.PUSH_MESSAGE,
   chatSelected,
   message,
-  handle
+  name
 })
 
 //// Accion cuando se agrega un mensajes desde el cliente
-export const addMessage = (message, handle) => ({
+export const addMessage = (message, name) => ({
   type: types.ADD_MESSAGE,
   message,
-  handle
+  name
 })
 
 // Accion cuando se recibe un mensaje del servidor
 // si no está el chat en cache, lo busca sino agrega nomás
-export const messageReceived = (chatSelected,message,handle) => ({
+export const messageReceived = (chatSelected,message,name) => ({
   type: types.MESSAGE_RECEIVED,
   chatSelected,
   message,
-  handle
+  name
 })

@@ -7,7 +7,7 @@ const chatReducer = (state = {}, action) => {
       {
         id: state.messages.length + 1,
         message: action.message,
-        handle: action.handle,
+        name: action.name,
       }]
     )
     newObject = Object.assign({}, state)
