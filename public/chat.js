@@ -49,6 +49,7 @@ chat.on('setup',(data)=>{
   console.log('recibió setup',data);
   chatId = data.id
   document.getElementById('name').value = data.name
+  output.innerHTML = ""
   data.messages.map(function (message) {
     escribir(message)
   })

@@ -50,7 +50,6 @@ exports.init =  function (server) {
     socket.on('consult', (data)=>{
       console.log('entra: '+ data.chatId)
       var mensaje = {
-        id:1,
         unRead:true,
         message:data.message,
         name:data.name,
