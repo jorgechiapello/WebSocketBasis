@@ -1,8 +1,8 @@
 import {  call, takeEvery, takeLatest, all, put, select, take  } from 'redux-saga/effects'
 import axios from 'axios'
 
-import * as types from '../actions/actionTypes'
-import * as actions from '../actions'
+import * as types from 'actions/chatActionTypes'
+import * as actions from 'actions/chatActions'
 
 ///Getters Básicos
 const isInCache = (state,chatId) => ( state.panel.chatsCache.find((elem) => (elem._id === chatId)) !== undefined )

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import panelReducer from './panelReducer'
+import chatPanelReducer from './chatPanelReducer'
 
 const mainReducer = combineReducers({
-  panel:panelReducer
+  panel:chatPanelReducer
 })
 
 export default mainReducer

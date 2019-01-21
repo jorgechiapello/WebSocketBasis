@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addMessage } from '../actions'
+import { addMessage } from 'actions/chatActions'
 import { FormGroup, Label, Input, Container, Row, Col, Button } from 'reactstrap';
 
 class NewMessage extends Component {

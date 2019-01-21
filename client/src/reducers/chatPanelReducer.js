@@ -7,7 +7,7 @@ const initialState  = {
   sendMessage:''
 }
 
-const panelReducer = (state = initialState,action) => {
+const chatPanelReducer = (state = initialState,action) => {
   var emptyChatCache,emptyChatList,chatSelectedContent,chatListElement
   switch (action.type) {
     //Agregar los chats recibidos por el fetch inicial
@@ -51,4 +51,4 @@ const panelReducer = (state = initialState,action) => {
   }
 }
 
-export default panelReducer
+export default chatPanelReducer

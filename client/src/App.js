@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter,Route } from 'react-router-dom';
-// import uuid from 'uuid';
 import './App.css';
-import Receptionist from './components/Receptionist';
+import ChatPanel from './components/ChatPanel';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route path="/" component={Receptionist}/>
+        <Route path="/" component={ChatPanel}/>
       </BrowserRouter>
     );
   }

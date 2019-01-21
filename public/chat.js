@@ -4,7 +4,7 @@ var message = document.getElementById('message')
     output = document.getElementById('output')
     feedback = document.getElementById('feedback')
     name = document.getElementById('name').value
-    chatId = "5c4234dfad55094548e8bd73"
+    chatId = null
 
     console.log( 'chatId: ' + chatId);
     console.log( 'name: ' + name);

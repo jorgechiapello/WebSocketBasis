@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { messageReceived } from  '../actions'
+import { messageReceived } from  'actions/chatActions'
 
 const setupSocket = (dispatch) => {
   const socketChat = io('http://localhost:3001/chat', { query: {rol: 'Recepcionist'} } )

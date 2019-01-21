@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { changeChatSelected, fetchChatIfNeeded } from '../actions'
+import { changeChatSelected, fetchChatIfNeeded } from 'actions/chatActions'
 
 class Sidebar extends Component {
   render() {

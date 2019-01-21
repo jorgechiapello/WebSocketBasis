@@ -48,7 +48,7 @@ exports.init =  function (server) {
 
     if (socket.handshake.query.rol === 'Recepcionist') {
       connectedRecepcionist[socket.id] = socket
-      socket.join('RecepcionistUsers');
+      socket.join('RecepcionistUsers')
     }
 
     socket.on('consult', (data)=>{
@@ -60,7 +60,7 @@ exports.init =  function (server) {
         date:Date.now()
       }
       new Promise ((resolve,reject)=>{
-        console.log('promise');
+        console.log('promise')
         if (data.chatId == null) {
           var nombreChat = 'Chat'
           ChatModel.find().exec(function (err, results) {
@@ -81,7 +81,7 @@ exports.init =  function (server) {
               chat.to(socket.id).emit('setup', {id: data.chatId, name: data.name,messages:[mensaje]})
               resolve(result)
             })
-          });
+          })
 
         } else {
           console.log('update', data.chatId)
@@ -93,21 +93,21 @@ exports.init =  function (server) {
               }
             },
             {},
-            function (error,result) {
-              console.log(error);
-              console.log(result);
-              chat.to(socket.id).emit('message', data);
+            function (err,result) {
+              if(err){console.error(err)}
+              console.log(result)
+              chat.to(socket.id).emit('message', data)
               resolve(result)
             })
           }
 
         }).then(function (result) {
-          console.log('envia chat');
+          console.log('envia chat')
           connectedPublicUsers[result._id] = socket
 
-          console.log('result',result._id);
+          console.log('result',result._id)
 
-          chat.to('RecepcionistUsers').emit('consultChat',data);
+          chat.to('RecepcionistUsers').emit('consultChat',data)
         })
 
       }
@@ -128,9 +128,9 @@ exports.init =  function (server) {
           }
         },
         {},
-        function (error,result) {
-          console.log(error);
-          console.log(result);
+        function (err,result) {
+          if(err) {console.error(err)}
+          console.log(result)
           if (result){
             socket.to(connectedPublicUsers[data.chatId]['id']).emit('message', data )
           }
@@ -143,7 +143,7 @@ exports.init =  function (server) {
     })
 
     socket.on('disconnect', function () {
-      console.log('disconnect: '+ socket.id);
+      console.log('disconnect: '+ socket.id)
       if (socket.handshake.query.rol === 'PublicUser') {
         delete connectedPublicUsers[socket.id]
       }
@@ -151,8 +151,8 @@ exports.init =  function (server) {
       if (socket.handshake.query.rol === 'Recepcionist') {
         delete connectedRecepcionist[socket.id]
       }
-      chat.emit('user disconnected');
-    });
+      chat.emit('user disconnected')
+    })
 
   })
   return io
