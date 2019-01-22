@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { addMessage } from 'actions/chatActions'
-import { FormGroup, Label, Input, Container, Row, Col, Button } from 'reactstrap';
 
 class NewMessage extends Component {
   constructor(props) {
@@ -11,17 +10,8 @@ class NewMessage extends Component {
   render() {
     return (
       <div>
-      <Container>
-        <Row>
-          <Col md={{ size:8, offset:1 }}>
-          <FormGroup>
-          <Label for="newMessageText">Text Area</Label>
-          <Input type="textarea" name="text" id="newMessageText" innerRef={this.textInputRef}/>
-          </FormGroup>
-          </Col>
-        </Row>
-        <Button onClick={this.props.handleClick(this.props.chatSelected,this.textInputRef)}>Submit</Button>
-      </Container>
+          <textarea type="textarea" name="text" id="newMessageText" ref={this.textInputRef}/>
+        <button onClick={this.props.handleClick(this.props.chatSelected,this.textInputRef)}>Submit</button>
       </div>
     );
   }
