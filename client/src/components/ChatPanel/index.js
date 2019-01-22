@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
 
 import Sidebar from "./Sidebar"
 import MessagesList from "./MessagesList"
@@ -8,23 +9,33 @@ import chatStoreFunction from 'stores/AppStore'
 import { fetchChatList } from 'actions/chatActions'
 
 const store = chatStoreFunction
-
+const styles = theme => ({
+  chatPanel:{
+    display: 'flex',
+  },
+  content:{
+    border: "red solid 2px",
+    width: "100%",
+    padding: "20px"
+  }
+})
 
 class ChatPanel extends Component {
   render() {
+    const { classes } = this.props;
     store.dispatch(fetchChatList())
     return (
       <Provider store={store}>
-        <div className="ChatPanel">
+        <div className={classes.chatPanel}>
             <Sidebar/>
-            <section id="main">
+            <div className={classes.content}>
               <MessagesList />
               <NewMessage />
-            </section>
+            </div>
         </div>
       </Provider>
-    );
+    )
   }
 }
 
-export default ChatPanel;
+export default withStyles(styles, { withTheme: true })(ChatPanel)

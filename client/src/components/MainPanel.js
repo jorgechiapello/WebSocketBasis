@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -98,7 +97,7 @@ class MainPanel extends Component {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" noWrap>
-            Mini variant drawer
+            Plataforma HelpDesk
           </Typography>
         </Toolbar>
       </AppBar>
@@ -112,10 +111,5 @@ class MainPanel extends Component {
     );
   }
 }
-
-SideNav.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles, { withTheme: true })(MainPanel);

@@ -10,7 +10,7 @@ class NewMessage extends Component {
   render() {
     return (
       <div>
-          <textarea type="textarea" name="text" id="newMessageText" ref={this.textInputRef}/>
+        <textarea type="textarea" name="text" id="newMessageText" ref={this.textInputRef}/>
         <button onClick={this.props.handleClick(this.props.chatSelected,this.textInputRef)}>Submit</button>
       </div>
     );

@@ -57,7 +57,8 @@ exports.init =  function (server) {
         unRead:true,
         message:data.message,
         name:data.name,
-        date:Date.now()
+        date:Date.now(),
+        replyMessage:false
       }
       new Promise ((resolve,reject)=>{
         console.log('promise')
@@ -119,7 +120,8 @@ exports.init =  function (server) {
         unRead:false,
         message:data.message,
         name:'Ministerio',
-        date:Date.now()
+        date:Date.now(),
+        replyMessage:true
       }
       ChatModel.findOneAndUpdate({_id:data.chatId},
         {

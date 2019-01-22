@@ -14,8 +14,10 @@ function* fetchChatList() {
     var chats = yield call(axios.get,'http://localhost:3001/api/chats')
     chats= chats.data
     yield put( actions.chatListReceived(chats) )
-    yield put( actions.changeChatSelected(chats[0]) )
-    yield put( actions.fetchChatIfNeeded(chats[0]['_id']) )
+    if (chats[0]!==undefined) {
+      yield put( actions.changeChatSelected(chats[0]) )
+      yield put( actions.fetchChatIfNeeded(chats[0]['_id']) )
+    }
   })
 }
 

@@ -23,7 +23,8 @@ const chatPanelReducer = (state = initialState,action) => {
     ///agrega al listado de chats un elemento nuevo
     case 'PUSH_CHAT_LIST_ELEMENT':
     emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chat._id) )
-    return Object.assign({},state,{ chatList: [].concat({_id:action.chat._id,name:action.chat.name},emptyChatList) })
+    console.log(action.chat);
+    return Object.assign({},state,{ chatList: [].concat({_id:action.chat._id,name:action.chat.name,messages:action.chat.messages},emptyChatList) })
 
     ///Agrega en la cache un mensaje
     case 'PUSH_MESSAGE':
@@ -37,7 +38,7 @@ const chatPanelReducer = (state = initialState,action) => {
     chatSelectedContent = state.chatList.find( (elem)=>(elem._id === action.chatSelected) )
     console.log(action, newChat)
     return Object.assign({}, state,{chatsCache:emptyChatCache.concat(newChat),
-      chatList:[].concat({_id:chatSelectedContent._id,name:chatSelectedContent.name, messages:[]},emptyChatList)
+      chatList:[].concat({_id:chatSelectedContent._id,name:chatSelectedContent.name, messages:newChat.messages},emptyChatList)
     } )
 
     ///agrega al listado de chats un elemento nuevo
