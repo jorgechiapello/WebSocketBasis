@@ -21,7 +21,7 @@ btn.addEventListener('click',(event)=>{
   console.log(name)
   /// emite un evento llamado chat y un objeto
   chat.emit('consult',{
-    message:message.value,
+    message:{message: message.value},
     name:document.getElementById('name').value,
     chatId:chatId
   })
@@ -32,6 +32,7 @@ message.addEventListener('keypress',()=>{
 })
 
 function escribir(data) {
+  console.log(data);
   output.innerHTML += `<p><strong>${data.name}:</strong>${data.message}</p>`
 }
 ///Escucha eventos
@@ -46,11 +47,11 @@ chat.on('message',(data)=>{
 // })
 
 chat.on('setup',(data)=>{
-  console.log('recibió setup',data);
   chatId = data.id
   document.getElementById('name').value = data.name
   output.innerHTML = ""
   data.messages.map(function (message) {
+    console.log(message);
     escribir(message)
   })
 })

@@ -12,11 +12,14 @@ const store = chatStoreFunction
 const styles = theme => ({
   chatPanel:{
     display: 'flex',
+
   },
   content:{
     border: "red solid 2px",
     width: "100%",
-    padding: "20px"
+    heigth:"100%",
+    padding: "20px",
+    borderRadius:theme.shape.borderRadius
   }
 })
 
@@ -27,11 +30,11 @@ class ChatPanel extends Component {
     return (
       <Provider store={store}>
         <div className={classes.chatPanel}>
-            <Sidebar/>
-            <div className={classes.content}>
-              <MessagesList />
-              <NewMessage />
-            </div>
+          <Sidebar/>
+          <div className={classes.content}>
+            <MessagesList />
+            <NewMessage />
+          </div>
         </div>
       </Provider>
     )

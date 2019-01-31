@@ -3,13 +3,7 @@ const chatReducer = (state = {}, action) => {
   switch (action.type) {
 
     case "PUSH_MESSAGE":
-    newArray = state.messages.concat([
-      {
-        id: state.messages.length + 1,
-        message: action.message,
-        name: action.name,
-      }]
-    )
+    newArray = state.messages.concat(action.message)
     newObject = Object.assign({}, state)
     newObject.messages = newArray
     newObject.unRead = false

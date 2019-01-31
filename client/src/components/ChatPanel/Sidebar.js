@@ -15,6 +15,7 @@ const styles = theme => ({
     width: '550px',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+    borderRadius:theme.shape.borderRadius
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
@@ -61,7 +62,7 @@ class Sidebar extends Component {
 
 const mapStateToProps = state => {
   return {chatList: state.panel.chatList.map( (elem)=>( {
-    name:elem.name, _id:elem._id, lastMessage:elem.messages[0]}
+    name:elem.name, _id:elem._id, lastMessage:elem.lastMessage}
   ) )}
 }
 

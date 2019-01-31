@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles'
 
 import Message from './Message'
 
 const styles = theme => ({
   content:{
-    backgroundColor:'yellow',
+    backgroundColor:"rgb(255, 255, 255)",
     padding: "0.5em",
-    overflowY: "auto",
     height: "80%",
+    overflowY: "auto",
+    borderRadius:theme.shape.borderRadius,
   }
 })
 

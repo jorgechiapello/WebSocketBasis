@@ -5,7 +5,21 @@ exports.init = (express) => {
   var routerAPI = express.Router()
 
   routerAPI.get('/chats',async (req, res)=>{
-    let query = ChatModel.find({},null,{limit: 10})
+    let query = ChatModel.aggregate(
+      [{ $project:
+        {
+          _id:1,
+          name:1,
+          unRead:1,
+          client:1,
+          date:1,
+          lastMessage:
+          {
+            $arrayElemAt: ["$messages",-1  ]
+          }
+        }
+      }]
+    )
     let queryRes = await query.exec()
     res.json(queryRes)
   })

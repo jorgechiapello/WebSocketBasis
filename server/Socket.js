@@ -55,7 +55,7 @@ exports.init =  function (server) {
       console.log('entra: '+ data.chatId)
       var mensaje = {
         unRead:true,
-        message:data.message,
+        message:data.message.message,
         name:data.name,
         date:Date.now(),
         replyMessage:false
@@ -97,7 +97,7 @@ exports.init =  function (server) {
             function (err,result) {
               if(err){console.error(err)}
               console.log(result)
-              chat.to(socket.id).emit('message', data)
+              chat.to(socket.id).emit('message', mensaje)
               resolve(result)
             })
           }
@@ -107,10 +107,9 @@ exports.init =  function (server) {
           connectedPublicUsers[result._id] = socket
 
           console.log('result',result._id)
-
-          chat.to('RecepcionistUsers').emit('consultChat',data)
+          console.log(mensaje)
+          chat.to('RecepcionistUsers').emit('consultChat',{chatId:data.chatId,message:mensaje,name:data.name})
         })
-
       }
     )
 
@@ -132,9 +131,8 @@ exports.init =  function (server) {
         {},
         function (err,result) {
           if(err) {console.error(err)}
-          console.log(result)
-          if (result){
-            socket.to(connectedPublicUsers[data.chatId]['id']).emit('message', data )
+          if (result && (connectedPublicUsers[data.chatId] != undefined)){
+            socket.to(connectedPublicUsers[data.chatId]['id']).emit('message', mensaje )
           }
         })
       }

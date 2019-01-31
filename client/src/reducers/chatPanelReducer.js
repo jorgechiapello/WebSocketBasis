@@ -23,11 +23,15 @@ const chatPanelReducer = (state = initialState,action) => {
     ///agrega al listado de chats un elemento nuevo
     case 'PUSH_CHAT_LIST_ELEMENT':
     emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chat._id) )
-    console.log(action.chat);
-    return Object.assign({},state,{ chatList: [].concat({_id:action.chat._id,name:action.chat.name,messages:action.chat.messages},emptyChatList) })
+    return Object.assign({},state,{ chatList: [].concat({
+      _id:action.chat._id,
+      name:action.chat.name,
+      lastMessage:action.chat.messages.slice(-1)[0]
+    },emptyChatList) })
 
     ///Agrega en la cache un mensaje
     case 'PUSH_MESSAGE':
+    console.log(action);
     let oldChat =  state.chatsCache.find( (elem)=>(elem._id === action.chatSelected) )
     let newChat = chatReducer( oldChat,action )
     ///cache de chats sin el nuevo chat
@@ -36,9 +40,14 @@ const chatPanelReducer = (state = initialState,action) => {
     emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chatSelected) )
     //guarda el chat donde se agregó el último mensaje
     chatSelectedContent = state.chatList.find( (elem)=>(elem._id === action.chatSelected) )
-    console.log(action, newChat)
-    return Object.assign({}, state,{chatsCache:emptyChatCache.concat(newChat),
-      chatList:[].concat({_id:chatSelectedContent._id,name:chatSelectedContent.name, messages:newChat.messages},emptyChatList)
+
+    let newChatListElement = state.chatList.find((elem)=>(
+      elem._id === action.chatSelected
+    ))
+    newChatListElement.lastMessage = action.message
+    return Object.assign({}, state,{
+      chatsCache:emptyChatCache.concat(newChat),
+      chatList:[].concat(newChatListElement,emptyChatList)
     } )
 
     ///agrega al listado de chats un elemento nuevo
