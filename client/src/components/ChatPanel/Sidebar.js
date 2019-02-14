@@ -14,8 +14,15 @@ const styles = theme => ({
   root: {
     width: '550px',
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-    borderRadius:theme.shape.borderRadius
+    borderRadius:theme.shape.borderRadius,
+    overflowY: "scroll",
+    backgroundColor:theme.palette.primary.dark,
+  },
+  navItem:{
+    maxWidth: 340,
+    backgroundColor:theme.palette.primary.light,
+    padding: "0px",
+    margin:"5px 5px"
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
@@ -34,7 +41,7 @@ class Sidebar extends Component {
         {this.props.chatList.map((elem,index)=>
           (<List
             component="nav"
-            className={classes.root}
+            className={classes.navItem}
             onClick={this.props.handleClick(elem)}
             key={elem._id}
             >

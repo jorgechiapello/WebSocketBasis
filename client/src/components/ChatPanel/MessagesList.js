@@ -7,14 +7,28 @@ import Message from './Message'
 const styles = theme => ({
   content:{
     backgroundColor:"rgb(255, 255, 255)",
-    padding: "0.5em",
-    height: "80%",
     overflowY: "auto",
     borderRadius:theme.shape.borderRadius,
+    height: "calc(100% - 45px)",
+  },
+  messages:{
+    minHeight: "calc(100% - 93px)",
+    overflowY: "auto",
+  },
+  ulStyle:{
+    listStyle: "none",
   }
 })
 
 class MessagesList extends Component {
+  constructor(props) {
+    super(props);
+    this.ChatMessages = React.createRef();
+  }
+  componentDidUpdate() {
+    console.log(this.ChatMessages.current)
+    this.ChatMessages.current.scrollIntoView({block:"end" });
+  }
   render() {
     const { classes } = this.props;
 
@@ -25,9 +39,13 @@ class MessagesList extends Component {
     }
     return (
       <div className={classes.content}>
-      {messages.map( (elem,index) => (
-        <Message key={index} message={elem} />
-      ))}
+        <div className={classes.messages} ref={this.ChatMessages}>
+          <ul className={classes.ulStyle}>
+          {messages.map( (elem,index) => (
+            <Message key={index} message={elem} />
+          ))}
+          </ul>
+        </div>
       </div>
     )
   }

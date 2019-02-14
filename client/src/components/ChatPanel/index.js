@@ -10,16 +10,17 @@ import { fetchChatList } from 'actions/chatActions'
 
 const store = chatStoreFunction
 const styles = theme => ({
-  chatPanel:{
+  root:{
     display: 'flex',
-
+    minHeight: "300px",
+    maxHeight: "490px",
+    height:"490px",
   },
   content:{
-    border: "red solid 2px",
+    border: "#c9aaaa solid 2px",
     width: "100%",
-    heigth:"100%",
-    padding: "20px",
-    borderRadius:theme.shape.borderRadius
+    borderRadius:theme.shape.borderRadius,
+    minHeight: "300px",
   }
 })
 
@@ -29,7 +30,7 @@ class ChatPanel extends Component {
     store.dispatch(fetchChatList())
     return (
       <Provider store={store}>
-        <div className={classes.chatPanel}>
+        <div className={classes.root}>
           <Sidebar/>
           <div className={classes.content}>
             <MessagesList />
