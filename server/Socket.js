@@ -1,6 +1,14 @@
 var history = require('./ChatHistory')
 let ChatModel = require('./model/chatModel')
 
+const newMessage = (message,name = 'Ministerio',replyMessage = true) => ({
+  unRead:true,
+  message:message,
+  name:name,
+  date:Date.now(),
+  replyMessage:replyMessage
+})
+
 exports.init =  function (server) {
   var socket  = require ('socket.io')
   var io = socket(server)
@@ -53,13 +61,7 @@ exports.init =  function (server) {
 
     socket.on('consult', (data)=>{
       console.log('entra: '+ data.chatId)
-      var mensaje = {
-        unRead:true,
-        message:data.message.message,
-        name:data.name,
-        date:Date.now(),
-        replyMessage:false
-      }
+      var mensaje = newMessage (data.message,data.name,false)
       new Promise ((resolve,reject)=>{
         console.log('promise')
         if (data.chatId == null) {
@@ -114,14 +116,7 @@ exports.init =  function (server) {
     )
 
     socket.on('reply', (data)=>{
-      data.name = 'Ministerio de Justicia'
-      var mensaje = {
-        unRead:false,
-        message:data.message,
-        name:'Ministerio',
-        date:Date.now(),
-        replyMessage:true
-      }
+      var mensaje = newMessage(data.message)
       ChatModel.findOneAndUpdate({_id:data.chatId},
         {
           $push: {

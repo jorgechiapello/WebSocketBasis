@@ -14,7 +14,7 @@ const styles = theme => ({
     display: "inline-block",
     clear: "both",
     float: "left",
-    margin: "0px 15px 5px 0px",
+    margin: "0px 15px 0px 0px",
     width: "calc(100% - 25px)",
     fontSize: "0.9em",
   },
@@ -24,7 +24,7 @@ const styles = theme => ({
     borderRadius: "20px",
     maxWidth: "205px",
     lineHeight: "130%",
-    margin: "4px 0px",
+    margin: "1px 0px",
   }
 })
 class Message extends Component {

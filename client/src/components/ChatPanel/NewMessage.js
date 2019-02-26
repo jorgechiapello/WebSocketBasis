@@ -11,7 +11,9 @@ const styles = theme => ({
     backgroundColor:theme.palette.primary.light,
     width:"100%",
     padding: "4px",
-    maxHeight: "50px",
+    minHeight: "45px",
+    maxHeight: "100px",
+    overflowY:"auto"
   },
   textInput:{
     float: "left",

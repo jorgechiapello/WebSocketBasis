@@ -21,7 +21,7 @@ btn.addEventListener('click',(event)=>{
   console.log(name)
   /// emite un evento llamado chat y un objeto
   chat.emit('consult',{
-    message:{message: message.value},
+    message:message.value,
     name:document.getElementById('name').value,
     chatId:chatId
   })

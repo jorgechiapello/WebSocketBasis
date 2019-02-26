@@ -30,6 +30,11 @@ const styles = theme => ({
   inline: {
     display: 'inline',
   },
+  profileItem:{
+    backgroundColor:"white",
+    padding:"5px",
+    borderRadius: "50%",
+  }
 })
 
 class Sidebar extends Component {
@@ -46,7 +51,7 @@ class Sidebar extends Component {
             key={elem._id}
             >
             <ListItem button>
-              <ListItemIcon>
+              <ListItemIcon className={classes.profileItem}>
                 <PersonIcon />
               </ListItemIcon>
               <ListItemText primary={elem.name}
