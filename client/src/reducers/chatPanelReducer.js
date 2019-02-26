@@ -8,7 +8,7 @@ const initialState  = {
 }
 
 const chatPanelReducer = (state = initialState,action) => {
-  var emptyChatCache,emptyChatList,chatSelectedContent,chatListElement
+  var emptyChatCache,emptyChatList,chatListElement
   switch (action.type) {
     //Agregar los chats recibidos por el fetch inicial
     case 'CHAT_LIST_RECEIVED':
@@ -39,12 +39,11 @@ const chatPanelReducer = (state = initialState,action) => {
     //listado de chats sin el chat actualizado
     emptyChatList = state.chatList.filter( (elem)=>(elem._id !== action.chatSelected) )
     //guarda el chat donde se agregó el último mensaje
-    chatSelectedContent = state.chatList.find( (elem)=>(elem._id === action.chatSelected) )
-
     let newChatListElement = state.chatList.find((elem)=>(
       elem._id === action.chatSelected
     ))
     newChatListElement.lastMessage = action.message
+    
     return Object.assign({}, state,{
       chatsCache:emptyChatCache.concat(newChat),
       chatList:[].concat(newChatListElement,emptyChatList)

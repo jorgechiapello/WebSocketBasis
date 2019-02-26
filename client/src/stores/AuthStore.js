@@ -1,18 +1,17 @@
 import { createStore,applyMiddleware,compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
-import mainReducer from '../reducers'
-import rootSaga from '../sagas'
-import setupSocket from '../sockets'
+import authSaga from '../sagas/authSaga'
+import authReducer from '../reducers/authReducer'
 
-const initialState = {};
+const initialState = {loggedIn: false};
 
 const sagaMiddleware = createSagaMiddleware()
 
 const middleware = [sagaMiddleware]
 
-const store = createStore(
-  mainReducer,
+const authStore = createStore(
+  authReducer,
   initialState,
   compose(
     applyMiddleware(...middleware),
@@ -20,7 +19,6 @@ const store = createStore(
   )
 )
 
-const socket = setupSocket(store.dispatch)
 
-sagaMiddleware.run(rootSaga,{socket:socket})
-export default store
+sagaMiddleware.run(authSaga)
+export default authStore

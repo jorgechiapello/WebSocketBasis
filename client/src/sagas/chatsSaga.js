@@ -1,4 +1,4 @@
-import {  call, takeEvery, takeLatest, all, put, select, take  } from 'redux-saga/effects'
+import {  call, takeEvery, takeLatest, put, select, take  } from 'redux-saga/effects'
 import axios from 'axios'
 
 import * as types from 'actions/chatActionTypes'
@@ -69,12 +69,10 @@ function* messageReceived() {
   })
 }
 
-export default function* rootSaga(params) {
-  yield all([
-    fetchChatList(),
-    fetchChatIfNeeded(),
-    chatReceived(),
-    addMessage(params.socket),
-    messageReceived()
-  ])
-}
+export const chatsSaga =  {
+  fetchChatList,
+  fetchChatIfNeeded,
+  chatReceived,
+  addMessage,
+  messageReceived,
+};

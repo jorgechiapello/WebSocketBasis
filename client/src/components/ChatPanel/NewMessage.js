@@ -60,7 +60,6 @@ class NewMessage extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   handleClick: (chatSelected,textInputRef) => (e) => {
-    console.log(textInputRef);
     dispatch(addMessage(textInputRef.current.value,'Ministerio'))
   }
 })
