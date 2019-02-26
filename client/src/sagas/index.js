@@ -1,5 +1,6 @@
 import { all } from 'redux-saga/effects'
 import {chatsSaga} from './chatsSaga'
+import {authSaga} from './authSaga'
 
 export default function* rootSaga(params) {
   yield all([
@@ -8,5 +9,6 @@ export default function* rootSaga(params) {
     chatsSaga.chatReceived(),
     chatsSaga.addMessage(params.socket),
     chatsSaga.messageReceived(),
+    authSaga.loginFlow()
   ])
 }

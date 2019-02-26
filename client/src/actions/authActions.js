@@ -1,8 +1,9 @@
 import * as types from './authActionsTypes'
 
-export const loginRequest = (user) => ({
+export const loginRequest = (user,password) => ({
   type: types.LOGIN_REQUEST,
   user,
+  password
 })
 export const loginSuccess = (user) => ({
   type: types.LOGIN_SUCCESS,

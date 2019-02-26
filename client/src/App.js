@@ -5,22 +5,21 @@ import { Provider } from 'react-redux'
 import MainPanel from './components/MainPanel';
 import { PrivateRoute } from './components/Auth/PrivateRoute';
 import  LoginPage  from './components/Auth/LoginPage'
-import authStoreFunction from 'stores/AuthStore'
+import storeFunction from 'stores/AppStore'
 
-const authStore = authStoreFunction
+const store = storeFunction
 
 class App extends Component {
   render() {
-    console.log(authStore);
     return (
-      <Provider store={authStore}>
+      <Provider store={store}>
       <BrowserRouter>
         <div>
+          <PrivateRoute exact path="/" component={MainPanel}   />
           <Route path="/login" component={LoginPage}/>
         </div>
       </BrowserRouter>
       </Provider>
-
     );
   }
 }

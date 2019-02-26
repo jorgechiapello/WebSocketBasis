@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { userService } from '../../services/userService';
+import { loginRequest } from '../../actions/authActions';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -12,36 +12,13 @@ class LoginPage extends Component {
           password: '',
           submitted: false,
           loading: false,
-          error: ''
       };
 
       this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
-  handleSubmit(e) {
-    e.preventDefault();
-
-    this.setState({ submitted: true });
-    const { username, password, returnUrl } = this.state;
-
-    // stop here if form is invalid
-    if (!(username && password)) {
-        return;
-    }
-
-    this.setState({ loading: true });
-    userService.login(username, password)
-      .then(
-          user => {
-              const { from } = this.props.location.state || { from: { pathname: "/" } };
-              this.props.history.push(from);
-          },
-          error => this.setState({ error, loading: false })
-      );
   }
   render() {
     const { username, password, submitted, loading, error } = this.state;
@@ -52,7 +29,7 @@ class LoginPage extends Component {
                 Password: test
             </div>
             <h2>Login</h2>
-            <form name="form" onSubmit={this.handleSubmit}>
+            <form name="form" onSubmit={(e)=>this.props.handleSubmit(e,this)}>
                 <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                     <label htmlFor="username">Username</label>
                     <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
@@ -81,12 +58,19 @@ class LoginPage extends Component {
     );
   }
 }
-
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmit: (e,loginPageComponent) => {
+    e.preventDefault()
+    loginPageComponent.setState({ submitted: true });
+    const { username, password } = loginPageComponent.state;
+    if (username && password) {
+        dispatch(loginRequest(username, password));
+    }
+  }
+})
 const mapStateToProps = state => {
-  console.log(state);
   return {
-    chatSelected: state.loggedIn
+    auth: state.authentication,
   }
 }
-
-export default connect (mapStateToProps,{}) (LoginPage)
+export default connect (mapStateToProps,mapDispatchToProps) (LoginPage)
