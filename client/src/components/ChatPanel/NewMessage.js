@@ -36,7 +36,7 @@ class NewMessage extends Component {
     this.textInputRef = React.createRef();
   }
   render() {
-    const { classes, theme } = this.props
+    const { classes } = this.props
     return (
       <div className={classes.newMessage}>
         <TextField name="text" id="newMessageText"
@@ -49,7 +49,6 @@ class NewMessage extends Component {
           }}
         />
         <Button variant="contained" color="primary" className={classes.sendBtn} onClick={this.props.handleClick(this.props.chatSelected,this.textInputRef)}>
-          {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
           <SendIcon />
         </Button>
       </div>

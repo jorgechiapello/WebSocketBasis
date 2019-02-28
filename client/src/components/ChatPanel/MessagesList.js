@@ -26,7 +26,6 @@ class MessagesList extends Component {
     this.ChatMessages = React.createRef();
   }
   componentDidUpdate() {
-    console.log(this.ChatMessages.current)
     this.ChatMessages.current.scrollIntoView({block:"end" });
   }
   render() {

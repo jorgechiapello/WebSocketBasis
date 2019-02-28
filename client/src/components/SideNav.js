@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -11,8 +12,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ExitToApp  from '@material-ui/icons/ExitToApp';
+
+import { userLogout } from '../actions/authActions';
 
 const drawerWidth = 200;
 
@@ -78,21 +80,10 @@ class SideNav extends Component {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button key='Logout'>
+              <ListItemIcon onClick={this.props.handleClick()}><ExitToApp /></ListItemIcon>
+              <ListItemText primary='Logout' />
+            </ListItem>
           </List>
         </Drawer>
     );
@@ -104,5 +95,11 @@ SideNav.propTypes = {
   handleDrawerClose: PropTypes.func,
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  handleClick: () => (e) => {
+    e.preventDefault()
+    dispatch(userLogout())
+  }
+})
 
-export default withStyles(styles, { withTheme: true })(SideNav);
+export default connect (()=>({}),mapDispatchToProps) (withStyles(styles, { withTheme: true })(SideNav))
