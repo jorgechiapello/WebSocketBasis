@@ -1,6 +1,7 @@
 export function configureFakeBackend() {
     let users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
     let realFetch = window.fetch;
+    const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MTYyMzkwMjJ9.EDw76n2avFkmAouTH24k_njIGYCJGyaHfr1SkMAhxGk"
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
@@ -8,6 +9,7 @@ export function configureFakeBackend() {
 
                 // authenticate
                 if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
+                  console.log("autenticacion")
                     // get parameters from post request
                     let params = JSON.parse(opts.body);
 
@@ -24,7 +26,7 @@ export function configureFakeBackend() {
                             username: user.username,
                             firstName: user.firstName,
                             lastName: user.lastName,
-                            token: 'fake-jwt-token'
+                            token: fakeToken
                         };
                         resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) });
                     } else {
@@ -38,7 +40,7 @@ export function configureFakeBackend() {
                 // get users
                 if (url.endsWith('/users') && opts.method === 'GET') {
                     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-                    if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
+                    if (opts.headers && opts.headers.Authorization === 'Bearer ' + fakeToken) {
                         resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users))});
                     } else {
                         // return 401 not authorised if token is null or invalid
@@ -51,7 +53,7 @@ export function configureFakeBackend() {
                 // pass through any requests not handled above
                 realFetch(url, opts).then(response => resolve(response));
 
-            }, 500);
+            }, 1000);
         });
     }
 }

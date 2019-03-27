@@ -4,7 +4,7 @@ import authReducer from './authReducer'
 
 const mainReducer = combineReducers({
   panel:chatPanelReducer,
-  authentication:authReducer
+  authentication:authReducer,
 })
 
 export default mainReducer

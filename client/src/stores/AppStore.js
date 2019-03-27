@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 import mainReducer from '../reducers'
 import rootSaga from '../sagas'
 import setupSocket from '../sockets'
+import {interceptor401} from '../interceptors'
 
 const initialState = {};
 

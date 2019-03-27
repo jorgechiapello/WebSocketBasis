@@ -4,26 +4,27 @@ const initialState = {
   user:null,
   submitted: false,
   loading: false,
-  error:  null
+  error:'Mensaje de error 1'
 };
 if (user) {
   initialState.user = user
   initialState.loggedIn = true
-}else {
-  initialState.loggedIn = false
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN_REQUEST':
-      return Object.assign({}, state,{ loggedIn: true, user: action.user, error:'' } )
+      return Object.assign({}, state,{ submitted:true } )
     case 'LOGIN_SUCCESS':
-      return Object.assign({}, state,{ loggedIn: true, user: action.user, error:'' } )
+      return Object.assign({}, state,{ loggedIn: true, user: action.user, submitted:false } )
     case 'LOGIN_FAILURE':
-      return Object.assign({}, state,{ error:action.error } )
+      return Object.assign({}, state,{ user:null, submitted:false, error:action.error } )
+    case 'TOKEN_FAILURE':
+      localStorage.removeItem('user');
+      return Object.assign({}, state,{ loggedIn: false,user:null, submitted:false, error:action.error } )
     case 'USER_LOGOUT':
       localStorage.removeItem('user');
-      return { loggedIn: false };
+      return Object.assign({}, state,{ loggedIn: false, user:null } )
     default:
       return state
   }

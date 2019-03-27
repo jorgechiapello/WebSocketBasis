@@ -14,19 +14,25 @@ var server = app.listen(3001, (err, req, res, next)=>{
 app.use(cors(),express.static('public'))
 
 ///App Middleware
-app.use(middleware.requestTime,middleware.myLogger)
+app.use(middleware.requestTime,middleware.myLogger, )
 
-///Static File
-app.use('/api', routerAPI.init(express));
+
+app.use('/api',middleware.checkJWT, routerAPI.init(express));
 
 app.use(function(req, res, next) {
   res.status(404).send('Página no encontrada.');
-});
+})
+
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send('Token Inválido')
+  }
+})
 
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Error en el servidor.');
-});
+  console.error(err.stack)
+  res.status(500).send('Error en el servidor.')
+})
 
 //Inicia el ServerSocket
 var io = socket.init(server)

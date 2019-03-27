@@ -80,8 +80,8 @@ class SideNav extends Component {
           </div>
           <Divider />
           <List>
-            <ListItem button key='Logout'>
-              <ListItemIcon onClick={this.props.handleClick()}><ExitToApp /></ListItemIcon>
+            <ListItem button key='Logout' onClick={this.props.handleClick()}>
+              <ListItemIcon><ExitToApp /></ListItemIcon>
               <ListItemText primary='Logout' />
             </ListItem>
           </List>

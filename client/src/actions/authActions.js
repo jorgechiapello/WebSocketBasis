@@ -17,3 +17,8 @@ export const loginFailure = (error) => ({
 export const userLogout = () => ({
   type: types.USER_LOGOUT,
 })
+
+export const tokenFailure = (error) => ({
+  type: types.TOKEN_FAILURE,
+  error
+})

@@ -25,7 +25,6 @@ function* loginFlow() {
   while(true){
     const {user, password} = yield take(types.LOGIN_REQUEST)
     const task = yield fork(authorize, user, password)
-    console.log('recibe el saga');
     const action = yield take([types.USER_LOGOUT, types.LOGIN_FAILURE])
     if (action.type === types.USER_LOGOUT){
       yield cancel(task)
