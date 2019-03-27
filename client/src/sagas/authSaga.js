@@ -1,17 +1,16 @@
 import {  call, put, take, cancelled, cancel, fork  } from 'redux-saga/effects'
-
+import axios from 'axios'
 import * as types from '../actions/authActionsTypes'
 import * as actions from 'actions/authActions'
 
-import { userService } from '../services/userService';
-
 function* authorize(user, password) {
   try {
-    const token = yield call(userService.login, user, password)
+    const resp = yield call(axios.post,'http://localhost:3001/users/authenticate',{username:user,password:password})
+    const token = resp.data
     yield put(actions.loginSuccess(token))
-    // yield call(Api.storeItem, {token})
     return token
   } catch(error) {
+    error = error.response.data.message
     yield put({type: 'LOGIN_FAILURE', error})
   } finally{
     if (yield cancelled()) {

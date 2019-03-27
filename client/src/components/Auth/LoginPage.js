@@ -28,7 +28,6 @@ class LoginPage extends Component {
         password: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    console.log(props);
     if (props.auth.loggedIn) {
       props.history.push('/')
     }
@@ -40,7 +39,6 @@ class LoginPage extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.auth.loggedIn) {
       this.props.history.push('/')
-      console.log(this.props.auth.loggedIn)
     }
   }
   render() {
@@ -61,7 +59,7 @@ class LoginPage extends Component {
           xs={3}>
           {this.props.auth.error &&
             <Paper>
-              {this.props.auth.error}
+              {this.props.auth.error && typeof(this.props.auth.error)=="string" ? this.props.auth.error : "Server Error"}
             </Paper>
           }
           </Grid>

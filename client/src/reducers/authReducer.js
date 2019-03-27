@@ -16,6 +16,7 @@ const authReducer = (state = initialState, action) => {
     case 'LOGIN_REQUEST':
       return Object.assign({}, state,{ submitted:true } )
     case 'LOGIN_SUCCESS':
+      localStorage.setItem('user', JSON.stringify(action.user))
       return Object.assign({}, state,{ loggedIn: true, user: action.user, submitted:false } )
     case 'LOGIN_FAILURE':
       return Object.assign({}, state,{ user:null, submitted:false, error:action.error } )
