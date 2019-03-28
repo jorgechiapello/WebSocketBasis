@@ -4,7 +4,7 @@ const initialState = {
   user:null,
   submitted: false,
   loading: false,
-  error:'Mensaje de error 1'
+  error:null
 };
 if (user) {
   initialState.user = user
@@ -19,6 +19,7 @@ const authReducer = (state = initialState, action) => {
       localStorage.setItem('user', JSON.stringify(action.user))
       return Object.assign({}, state,{ loggedIn: true, user: action.user, submitted:false } )
     case 'LOGIN_FAILURE':
+      console.log(action);
       return Object.assign({}, state,{ user:null, submitted:false, error:action.error } )
     case 'TOKEN_FAILURE':
       localStorage.removeItem('user');

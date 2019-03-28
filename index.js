@@ -24,7 +24,7 @@ app.use('/api',middleware.checkJWT, routerAPI.init(express));
 //en caso de que el Token sea inválido, devuelve un 403
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
-    res.status(403).send({message:'Token Inválido'})
+    res.status(401).send({code:'UnauthorizedError',message:'Sesión Inválida'})
   }
 })
 

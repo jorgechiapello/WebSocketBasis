@@ -13,7 +13,7 @@ function authenticate(req, res, next) {
     new Promise(function(resolve, reject) {
       const user = users.find(u => u.username === username && u.password === password)
       if (user) {
-        const token = jwt.sign({ username: user.test }, secret);
+        const token = jwt.sign({ username: user.test }, secret,{ expiresIn: '12h' });
         const { password, ...userWithoutPassword } = user
         resolve ({
           ...userWithoutPassword,

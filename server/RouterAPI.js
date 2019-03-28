@@ -31,10 +31,10 @@ exports.init = (express) => {
         // if (err) {console.error(err)}
       })
       var queryRes = await query.exec()
+      res.json(queryRes || [])
     } catch (e) {
-      queryRes = null
+      res.status(500).send( {message: "Error al recuperar mensajes"} )
     }
-    res.json(queryRes || [])
   })
   return routerAPI;
 }

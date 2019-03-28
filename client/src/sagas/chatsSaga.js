@@ -1,4 +1,4 @@
-import {  call, takeEvery, takeLatest, put, select, take  } from 'redux-saga/effects'
+import {  call, takeEvery, takeLatest, put, select, take, fork  } from 'redux-saga/effects'
 import axios from 'axios'
 
 import * as types from 'actions/chatActionTypes'
@@ -10,24 +10,40 @@ const isInList = (state,chatId) => ( state.panel.chatList.find((elem) => (elem._
 const getChatSelected = state => state.panel.chatSelected
 
 function* fetchChatList() {
-  yield takeLatest(types.FETCH_CHAT_LIST, function* (action) {
-    var chats = yield call(axios.get,'http://localhost:3001/api/chats')
-    chats= chats.data
-    yield put( actions.chatListReceived(chats) )
-    if (chats[0]!==undefined) {
-      yield put( actions.changeChatSelected(chats[0]) )
-      yield put( actions.fetchChatIfNeeded(chats[0]['_id']) )
-    }
-  })
+  try {
+    yield takeLatest(types.FETCH_CHAT_LIST, function* (action) {
+      var chats = yield call(axios.get,'http://localhost:3001/api/chats')
+      chats= chats.data
+      yield put( actions.chatListReceived(chats) )
+      if (chats[0]!==undefined) {
+        yield put( actions.changeChatSelected(chats[0]) )
+        yield put( actions.fetchChatIfNeeded(chats[0]['_id']) )
+      }
+    })
+  } catch (e) {
+    console.error("Error en fetchChatList",e);
+  }
+}
+function* fetchChat(chatId, tries = 2) {
+  try {
+    var resp = yield (call(axios.get,'http://localhost:3001/api/chats/'+chatId))
+    let chat = resp.data
+    yield put( actions.chatReceived(chat) )
+  } catch (e) {
+    tries > 0 ? yield (fork(fetchChat,chatId,tries-1)) : console.log('Error al recuperar chat');
+  }
 }
 
 function* fetchChatIfNeeded() {
   while(true){
     const action = yield take(types.FETCH_CHAT_IF_NEED)
-    if ( ! (yield select(isInCache,action.chatId ))  ) {
-      var chat = yield call(axios.get,'http://localhost:3001/api/chats/'+action.chatId)
-      chat = chat.data
-      yield put( actions.chatReceived(chat) )
+    try {
+      if ( ! (yield select(isInCache,action.chatId ))  ) {
+        console.log(action);
+        yield (fork(fetchChat,action.chatId))
+      }
+    } catch (e) {
+      console.error("Error en fetchChatIfNeeded",e);
     }
   }
 }

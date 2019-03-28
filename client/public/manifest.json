@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "HelpDeskSAS",
+  "name": "A HelpDesk ChatApp for SAS",
   "icons": [
     {
       "src": "favicon.ico",

@@ -16,11 +16,10 @@ const setToken = () => (axios.interceptors.request.use(function(config) {
 const interceptor401 = (dispatch) => {axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if (403 === error.response.status) {
+    if (401 === error.response.status && error.response.data.message === 'Sesión Inválida') {
       dispatch(tokenFailure(error.response.data.message))
-    } else {
-        return Promise.reject(error);
     }
+    return Promise.reject(error);
 })}
 
 export {setToken,interceptor401}

@@ -10,8 +10,8 @@ function* authorize(user, password) {
     yield put(actions.loginSuccess(token))
     return token
   } catch(error) {
-    error = error.response.data.message
-    yield put({type: 'LOGIN_FAILURE', error})
+    const message = error.response.data.message
+    yield put({type: 'LOGIN_FAILURE', error:message})
   } finally{
     if (yield cancelled()) {
       /// acá iría cualquier lógica que vuelva a la app a su estado sin
@@ -24,7 +24,7 @@ function* loginFlow() {
   while(true){
     const {user, password} = yield take(types.LOGIN_REQUEST)
     const task = yield fork(authorize, user, password)
-    const action = yield take([types.USER_LOGOUT, types.LOGIN_FAILURE])
+    const action = yield take([types.USER_LOGOUT, types.LOGIN_FAILURE,types.TOKEN_FAILURE])
     if (action.type === types.USER_LOGOUT){
       yield cancel(task)
     }
