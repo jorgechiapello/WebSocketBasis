@@ -38,6 +38,18 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing.unit * 3,
   },
+  alert:{
+    padding: `${theme.spacing.unit * 1}px ${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px`,
+    border:'1px solid transparent',
+    color:'#a94442',
+    backgroundColor:'#f2dede',
+    borderColor:'#ebccd1',
+    borderRadius:'4px',
+    boxShadow:'0px 0px'
+  },
+  tittle:{
+    marginBottom:theme.spacing.unit * 1
+  }
 });
 
 class LoginPage extends Component {
@@ -66,16 +78,21 @@ class LoginPage extends Component {
     return (
       <main className={classes.main}>
       <Paper className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography className={classes.tittle} component="h1" variant="h5">
           Sign in
         </Typography>
+        {this.props.auth.error ?
+        <Paper className={classes.alert}>
+        {this.props.auth.error && typeof(this.props.auth.error)=="string"? this.props.auth.error : "Error en el servidor" }
+        </Paper>
+        : ""}
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <InputLabel htmlFor="email">Email</InputLabel>
             <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleChange} />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
+            <InputLabel htmlFor="password">Contraseña</InputLabel>
             <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleChange}/>
           </FormControl>
           <FormControlLabel

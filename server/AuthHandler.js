@@ -20,7 +20,7 @@ function authenticate(req, res, next) {
           token
         })
       }else{
-        reject({ message: 'Username or password is incorrect' })
+        reject({ message: 'El usuario o contraseña es incorrecto' })
       }
     })
     .then(user => {return res.json(user)} )

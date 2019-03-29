@@ -39,7 +39,6 @@ function* fetchChatIfNeeded() {
     const action = yield take(types.FETCH_CHAT_IF_NEED)
     try {
       if ( ! (yield select(isInCache,action.chatId ))  ) {
-        console.log(action);
         yield (fork(fetchChat,action.chatId))
       }
     } catch (e) {
