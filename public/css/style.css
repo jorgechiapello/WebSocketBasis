@@ -1,5 +1,8 @@
+:root {
+  --primary-color: #3f51b5;
+}
 body{
-  font-family: 'Nunito';
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 h2{
@@ -54,12 +57,12 @@ input{
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-  font-family: Nunito;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
 }
 
 button{
-  background: #575ed8;
+  background: var(--primary-color);
   color: #fff;
   font-size: 18px;
   border: 0;
@@ -82,6 +85,6 @@ button{
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
-  font-family: Nunito;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
 }

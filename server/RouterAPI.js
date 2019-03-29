@@ -19,7 +19,7 @@ exports.init = (express) => {
           }
         }
       }]
-    )
+    ).sort( { date: -1 } ).limit(15)
     let queryRes = await query.exec()
     res.json(queryRes)
   })

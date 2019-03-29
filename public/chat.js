@@ -4,10 +4,11 @@ var message = document.getElementById('message')
     output = document.getElementById('output')
     feedback = document.getElementById('feedback')
     name = document.getElementById('name').value
-    chatId = null
 
-    console.log( 'chatId: ' + chatId);
-    console.log( 'name: ' + name);
+    userData = JSON.parse(localStorage.getItem('userData'))
+    chatId = userData ? userData.id : null
+    console.log(chatId)
+
     /// Hacer conexión
     var chat = io('http://localhost:3001/chat', { query: {rol: 'PublicUser', chatId:chatId, name:name} });
 
@@ -25,6 +26,7 @@ btn.addEventListener('click',(event)=>{
     name:document.getElementById('name').value,
     chatId:chatId
   })
+  message.value = null
 })
 
 message.addEventListener('keypress',()=>{
@@ -48,6 +50,8 @@ chat.on('message',(data)=>{
 
 chat.on('setup',(data)=>{
   chatId = data.id
+  chat.query.id = data.id
+  localStorage.setItem('userData',JSON.stringify(data))
   document.getElementById('name').value = data.name
   output.innerHTML = ""
   data.messages.map(function (message) {

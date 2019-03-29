@@ -1,11 +1,12 @@
 var history = require('./ChatHistory')
 let ChatModel = require('./model/chatModel')
 
-const newMessage = (message,name = 'Ministerio',replyMessage = true) => ({
+const newMessage = (message,name = 'Ministerio',replyMessage = true,userId = 1) => ({
   unRead:true,
   message:message,
   name:name,
   date:Date.now(),
+  userId:userId,
   replyMessage:replyMessage
 })
 
