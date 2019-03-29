@@ -1,22 +1,42 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
 
 import { loginRequest } from '../../actions/authActions';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
+  main: {
+    width: 'auto',
+    display: 'block', // Fix IE 11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
   },
   paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
-  demo: {
-    height: 240,
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
   },
 });
 
@@ -24,7 +44,7 @@ class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: '',
+        email: '',
         password: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -42,63 +62,43 @@ class LoginPage extends Component {
     }
   }
   render() {
-    const { username, password, submitted } = this.state;
     const { classes } = this.props;
     return (
-      <React.Fragment>
-      <Grid container className={classes.root}>
-        <Grid
-        container
-        spacing={16}
-        alignItems={'center'}
-        direction={'row'}
-        justify={'center'}
-        >
-          <Grid item
-          className={'alert alert-danger'}
-          xs={3}>
-          {this.props.auth.error &&
-            <Paper>
-              {this.props.auth.error && typeof(this.props.auth.error)=="string" ? this.props.auth.error : "Server Error"}
-            </Paper>
-          }
-          </Grid>
-        </Grid>
-      </Grid>
-        {alert.message &&
-          <div className={`alert ${alert.type}`}>{alert.message}</div>
-        }
-        <div className="col-md-6 col-md-offset-3">
-          <div className="alert alert-info">
-          Username: test<br />
-          Password: test
-          </div>
-          <h2>Login</h2>
-          <form name="form" onSubmit={(e)=>this.props.handleSubmit(e,this)}>
-            <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-              <label htmlFor="username">Username</label>
-              <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-              {submitted && !username &&
-                <div className="help-block">Username is required</div>
-              }
-            </div>
-            <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-              <label htmlFor="password">Password</label>
-              <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-              {submitted && !password &&
-                <div className="help-block">Password is required</div>
-              }
-            </div>
-            <div className="form-group">
-              <button className="btn btn-primary" disabled={this.props.auth.submitted}>Login</button>
-              {this.props.auth.submitted &&
-                <img alt="Cargando spinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-              }
-            </div>
-
-          </form>
-        </div>
-      </React.Fragment>
+      <main className={classes.main}>
+      <Paper className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form}>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <Input id="email" name="email" autoComplete="email" autoFocus onChange={this.handleChange} />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input name="password" type="password" id="password" autoComplete="current-password" onChange={this.handleChange}/>
+          </FormControl>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={this.props.auth.submitted}
+            onClick={(e)=>this.props.handleSubmit(e,this)}
+          >
+            Sign in
+          </Button>
+          {this.props.auth.submitted &&
+           <img alt="Cargando spinner" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+         }
+        </form>
+      </Paper>
+      </main>
     );
   }
 }
@@ -106,9 +106,9 @@ const mapDispatchToProps = (dispatch) => ({
   handleSubmit: (e,loginPageComponent) => {
     e.preventDefault()
     loginPageComponent.setState({ submitted: true });
-    const { username, password } = loginPageComponent.state;
-    if (username && password) {
-        dispatch(loginRequest(username, password));
+    const { email, password } = loginPageComponent.state;
+    if (email && password) {
+        dispatch(loginRequest(email, password));
     }
   }
 })
