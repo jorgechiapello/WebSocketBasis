@@ -35,7 +35,7 @@ message.addEventListener('keypress',()=>{
 
 function escribir(data) {
   console.log(data);
-  output.innerHTML += `<p><strong>${data.name}:</strong>${data.message}</p>`
+  output.innerHTML += `<li><p class="${data.userRol}"><strong>${data.name}:</strong>${data.message}</p></li>`
 }
 ///Escucha eventos
 chat.on('message',(data)=>{

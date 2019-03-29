@@ -1,14 +1,6 @@
 var history = require('./ChatHistory')
 let ChatModel = require('./model/chatModel')
-
-const newMessage = (message,name = 'Ministerio',replyMessage = true,userId = 1) => ({
-  unRead:true,
-  message:message,
-  name:name,
-  date:Date.now(),
-  userId:userId,
-  replyMessage:replyMessage
-})
+const newMessage = require('./model/message')
 
 exports.init =  function (server) {
   var socket  = require ('socket.io')
@@ -24,8 +16,6 @@ exports.init =  function (server) {
     var chatId, name = ""
 
     if (socket.handshake.query.rol === 'PublicUser') {
-      console.log('Publico conectado')
-
       chatId = socket.handshake.query.chatId
       name = socket.handshake.query.name
       //Si el chatId es distonto de null, ya hizo una consulta antes
@@ -60,11 +50,11 @@ exports.init =  function (server) {
       socket.join('RecepcionistUsers')
     }
 
+    ///Mensajes que vienen del usuario público, son consultas
+    //si no tiene un chatId, se inserta en la BD y se le da en este punto
     socket.on('consult', (data)=>{
-      console.log('entra: '+ data.chatId)
-      var mensaje = newMessage (data.message,data.name,false)
+      var mensaje = newMessage (data.message,data.name,false,data.chatId,'PublicUser')
       new Promise ((resolve,reject)=>{
-        console.log('promise')
         if (data.chatId == null) {
           var nombreChat = 'Chat'
           ChatModel.find().exec(function (err, results) {
@@ -88,7 +78,6 @@ exports.init =  function (server) {
           })
 
         } else {
-          console.log('update', data.chatId)
           ChatModel.findOneAndUpdate({_id:data.chatId},
             {
               client:data.name,
@@ -99,25 +88,20 @@ exports.init =  function (server) {
             {},
             function (err,result) {
               if(err){console.error(err)}
-              console.log(result)
               chat.to(socket.id).emit('message', mensaje)
               resolve(result)
             })
           }
 
         }).then(function (result) {
-          console.log('envia chat')
           connectedPublicUsers[result._id] = socket
-
-          console.log('result',result._id)
-          console.log(mensaje)
           chat.to('RecepcionistUsers').emit('consultChat',{chatId:data.chatId,message:mensaje,name:data.name})
         })
       }
     )
 
     socket.on('reply', (data)=>{
-      var mensaje = newMessage(data.message)
+      var mensaje = newMessage(data.message,'Ministerio',true,1,'Recepcionist')
       ChatModel.findOneAndUpdate({_id:data.chatId},
         {
           $push: {
