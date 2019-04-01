@@ -7,14 +7,16 @@
   <title>Websocket 1</title>
 </head>
 <body>
-  <div id="mario-chat">
+  <div id="main-chat">
     <div id="chat-window">
       <ul id="output"></ul>
       <div id="feedback"></div>
     </div>
-    <input id="name" type="text" placeholder="Name">
-    <textarea id="message" type="text"placeholder="Mensaje"></textarea>
-    <button id="send" type="button" name="button">Enviar</button>
+    <input id="name" type="text" placeholder="Nombre">
+    <div class="message-container">
+      <textarea id="message" type="text"placeholder="Mensaje"></textarea>
+      <button id="send" type="button" name="button">Enviar</button>
+    </div>
   </div>
   <script src="/chat.js"></script>
 </body>

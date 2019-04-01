@@ -14,18 +14,14 @@ var message = document.getElementById('message')
 
 ///Eventos emitidos
 btn.addEventListener('click',(event)=>{
-  console.log({
-    message:message.value,
-    name:name.value,
-    chatId:chatId
-  })
-  console.log(name)
   /// emite un evento llamado chat y un objeto
-  chat.emit('consult',{
-    message:message.value,
-    name:document.getElementById('name').value,
-    chatId:chatId
-  })
+  if (message.value != '') {
+    chat.emit('consult',{
+      message:message.value,
+      name:document.getElementById('name').value,
+      chatId:chatId
+    })
+  }
   message.value = null
 })
 
@@ -44,7 +40,7 @@ function printMessage(data) {
   // console.log(data);
   output.innerHTML += `
   <li>
-  <p class="${data.userRol}"><strong>${data.name}: </strong>
+  <p class="${data.userRol}"><strong><i>${data.name}</i>: </strong>
   ${data.message}
   <br />
   <small>${fecha.getHours()}:${fecha.getMinutes()}</small></p>

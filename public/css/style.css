@@ -2,6 +2,7 @@
   --primary-color: #3f51b5;
   --secondary-color: #435f7a;
   --tertiary-color:#788087;
+  --chat-border-radius:5px;
 }
 body{
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -13,18 +14,18 @@ h2{
   color: #575ed8;
 }
 
-#mario-chat{
+#main-chat{
   max-width: 600px;
   margin: 30px auto;
   border: 1px solid #ddd;
   box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-  border-radius: 2px;
+  border-radius: var(--chat-border-radius);
 }
 
 #chat-window{
   height: 430px;
   overflow: auto;
-  background: #f9f9f9;
+  background: #dce0f500;
 }
 
 li{
@@ -85,24 +86,29 @@ label{
 input{
   padding: 10px 20px;
   box-sizing: border-box;
-  background: #eee;
   border: 0;
   display: block;
   width: 100%;
   background: #fff;
-  border-bottom: 1px solid #eee;
+  border-bottom: 3px solid #eee;
+  border-top: 3px solid #eee;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
 }
-
-button{
+.message-container{
+  display: flex;
+  padding-top: 7px;
+}
+#send{
   background: var(--primary-color);
   color: #fff;
   font-size: 18px;
   border: 0;
   padding: 12px 0;
-  width: 100%;
-  border-radius: 0 0 2px 2px;
+  width: 98px;
+  border-radius: 5px 5px var(--chat-border-radius) 5px ;
+  height: 48px;
+  cursor: pointer;
 }
 #message{
   font: inherit;
@@ -118,4 +124,5 @@ button{
   background: transparent;
   line-height: inherit;
   padding-left: 19px;
+  color:black
 }
