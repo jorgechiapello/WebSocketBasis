@@ -32,16 +32,29 @@ btn.addEventListener('click',(event)=>{
 message.addEventListener('keypress',()=>{
   chat.emit('typing',name.value)
 })
-
-function escribir(data) {
-  console.log(data);
-  output.innerHTML += `<li><p class="${data.userRol}"><strong>${data.name}:</strong>${data.message}</p></li>`
+function printDate(fecha) {
+  let fechaAux = new Date(fecha);
+  diasSemana = ['Dom.','Lun.','Mar.','Mié.','Jue.','Vie.','Sáb.']
+  meses = ['Enero','Febrero', 'Marzo', 'Abril','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+  let frase = '<li class="fecha"> <p>'+ diasSemana[fechaAux.getDay()] +' '+ fechaAux.getDate() + ' de '+ meses[fechaAux.getMonth()] + ' '+ fechaAux.getFullYear() +'</p> </li>'
+  output.innerHTML += frase
+}
+function printMessage(data) {
+  let fecha = new Date(data.date)
+  // console.log(data);
+  output.innerHTML += `
+  <li>
+  <p class="${data.userRol}"><strong>${data.name}: </strong>
+  ${data.message}
+  <br />
+  <small>${fecha.getHours()}:${fecha.getMinutes()}</small></p>
+  </li>`
 }
 ///Escucha eventos
 chat.on('message',(data)=>{
-  console.log('Mensaje recibido: ',data);
+  // console.log('Mensaje recibido: ',data);
   feedback.innerHTML = ''
-  escribir(data)
+  printMessage(data)
 })
 
 // chat.on('typing',(data)=>{
@@ -54,8 +67,13 @@ chat.on('setup',(data)=>{
   localStorage.setItem('userData',JSON.stringify(data))
   document.getElementById('name').value = data.name
   output.innerHTML = ""
+  var currentDate = new Date(data.messages[0].date)
+  printDate(currentDate)
   data.messages.map(function (message) {
-    console.log(message);
-    escribir(message)
+    if(currentDate.getDate()!== new Date(message.date).getDate()) {
+      printDate(message.date)
+      currentDate = new Date(message.date)
+    }
+    printMessage(message)
   })
 })

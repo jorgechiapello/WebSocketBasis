@@ -1,5 +1,7 @@
 :root {
   --primary-color: #3f51b5;
+  --secondary-color: #435f7a;
+  --tertiary-color:#788087;
 }
 body{
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -20,27 +22,60 @@ h2{
 }
 
 #chat-window{
-  height: 400px;
+  height: 430px;
   overflow: auto;
   background: #f9f9f9;
 }
 
-#output p{
-  padding: 14px 0px;
-  margin: 0 20px;
-  color: #555;
+li{
+  clear: both;
+  float: left;
+  width: calc(100% - 25px);
+  margin: 0px 15px 0px 0px;
+  display: inline-block;
+  font-size: 0.9em;
+  margin:0px 11px;
 }
-
+#output{
+  list-style: none;
+  padding-left: 0px;
+  color:white;
+}
+#output p{
+  margin: 1px 0px;
+  display: inline-block;
+  padding: 5px 15px;
+  max-width: 205px;
+  line-height: 130%;
+  border-radius: 20px;
+}
+#output strong{
+  color: #c6c8e6;
+}
+.Recepcionist{
+  background: var(--primary-color);
+}
+.PublicUser{
+  background: var(--secondary-color);
+  float: right;
+  text-align: right;
+}
+.fecha{
+  color:black;
+  text-align: center;
+}
+.fecha > p {
+  background: var(--tertiary-color);
+  color: white;
+}
 #feedback p{
   color: #aaa;
   padding: 14px 0px;
   margin: 0 20px;
 }
-
-#output strong{
-  color: #575ed8;
+small{
+  color:#d5d5d5;
 }
-
 label{
   box-sizing: border-box;
   display: block;
@@ -69,39 +104,18 @@ button{
   width: 100%;
   border-radius: 0 0 2px 2px;
 }
-#rooms {
-  padding: 10px 20px;
-  box-sizing: border-box;
-  background: #eee;
-  border: 0;
-  border-bottom-color: currentcolor;
-  border-bottom-style: none;
-  border-bottom-width: 0px;
-  border-bottom-color: currentcolor;
-  border-bottom-style: none;
-  border-bottom-width: 0px;
-  display: block;
+#message{
+  font: inherit;
+  line-height: inherit;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 16px;
-}
-.Recepcionist{
-
-}
-.PublicUser{
-  float: right;
-}
-#output{
-  list-style: none;
-  padding-left: 0px;
-}
-li{
-  clear: both;
-  float: left;
-  width: calc(100% - 25px);
-  margin: 0px 15px 0px 0px;
-  display: inline-block;
-  font-size: 0.9em;
+  height: 100%;
+  resize: none;
+  cursor: inherit;
+  border: none;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  background: transparent;
+  line-height: inherit;
+  padding-left: 19px;
 }
