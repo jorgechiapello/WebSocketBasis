@@ -27,12 +27,10 @@ const styles = theme => ({
     textAlign:"center",
   },
   datePrint:{
-    width: "150px",
     background: "gray",
     marginLeft:"auto",
     marginRight:"auto",
     margin: "1px 0px",
-    display: "inline-block",
     padding: "5px 15px",
     maxWidth: "205px",
     lineHeight: "130%",

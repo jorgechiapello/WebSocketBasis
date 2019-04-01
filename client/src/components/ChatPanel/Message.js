@@ -42,7 +42,7 @@ class Message extends Component {
     return (
     <li className={classes.message} >
       <p className={[message.replyMessage? classes.sent: classes.received,classes.text].join(' ')}>
-        <strong className={classes.name}><i>{message.name}</i></strong>: {message.message}
+        <strong className={classes.name}><i>{message.name}:</i></strong> {message.message}
         <br/>
         <small className={[classes.hora, message.replyMessage? classes.sent: classes.received]}>{fecha.getHours()}:{fecha.getMinutes()}</small>
       </p>
