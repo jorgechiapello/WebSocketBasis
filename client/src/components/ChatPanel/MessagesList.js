@@ -56,7 +56,7 @@ class MessagesList extends Component {
   compareDates(date1,date2){
     let date1Aux = new Date(date1)
     let date2Aux = new Date(date2)
-    return date1Aux.getDate() != date2Aux.getDate() || date1Aux.getMonth() != date2Aux.getMonth()
+    return date1Aux.getDate() !== date2Aux.getDate() || date1Aux.getMonth() !== date2Aux.getMonth()
   }
   render() {
     const { classes } = this.props;
@@ -68,7 +68,6 @@ class MessagesList extends Component {
       var dateAux = new Date(messages[0].date)
       console.log(new Date(dateAux))
     }
-    var dateMessage;
     return (
       <div className={classes.content}>
         <div className={classes.messages} ref={this.ChatMessages}>
