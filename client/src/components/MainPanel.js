@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import ChatPanel from 'components/ChatPanel';
 import SideNav from 'components/SideNav';
+import withLoadingScreen from '../components/withLoadingScreen'
 
 const drawerWidth = 200;
 const styles = theme => ({
@@ -64,6 +65,12 @@ const styles = theme => ({
 
 
 class MainPanel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading:true,
+    };
+  }
   state = {
     open: false,
   };
@@ -112,4 +119,4 @@ class MainPanel extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(MainPanel);
+export default withStyles(styles, { withTheme: true })(withLoadingScreen(MainPanel));
